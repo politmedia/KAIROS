@@ -1,6 +1,8 @@
-# Freedomvote
+# KAIROS
 
-A tool to represent the views of politicans as a help to the voters.
+KAIROS is a Voting Advice Application (VAA) which is developed and provided as an open source software. It allows you to run your own VAA with the views of politicians and parties to a specific topic as a help to the voters.
+
+It is a fork of [https://github.com/freedomvote/freedomvote](Freedomvote).
 
 ## Used in
 
