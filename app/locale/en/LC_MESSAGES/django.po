@@ -671,3 +671,12 @@ msgstr "This website is only fully operations if Javascript is enabled."
 #: templates/navbar.html:7
 msgid "toggle_navigation"
 msgstr "Toggle navigation"
+
+msgid "import"
+msgstr "Import"
+
+msgid "csv_file"
+msgstr "CSV file"
+
+msgid "politicians_import_success"
+msgstr "%s have been imported successfully"
