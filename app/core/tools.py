@@ -1,6 +1,11 @@
 from django.conf import settings
+from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
+from django.utils.translation import gettext as _
+from textwrap import dedent
 import datetime
 import json
+
 
 def set_cookie(response, key, value, days_expire = 7):
     if days_expire is None:
@@ -20,8 +25,35 @@ def set_cookie(response, key, value, days_expire = 7):
             secure=settings.SESSION_COOKIE_SECURE or None
         )
 
+
 def get_cookie(request, key, default):
     strval = request.COOKIES.get(key)
     if strval:
         return json.loads(strval)
     return default
+
+
+def send_mail_to_politician(request, politician):
+        profile_url = reverse(
+            'politician_edit_profile',
+            kwargs={'unique_key': politician.unique_key}
+        )
+        profile_url_absolute = request.build_absolute_uri(profile_url)
+        send_mail(
+            str(_('Freedomvote account link')),
+            dedent(str(_("""Hello %(first_name)s %(last_name)s,
+
+            You receive the link for your profile on Freedomvote: %(url)s
+
+            Keep this link and use it to login to your profile again.
+
+            Sincerely,
+            The Freedomvote Team""") % {
+                'url': profile_url_absolute,
+                'first_name': politician.first_name,
+                'last_name': politician.last_name
+            })),
+            settings.DEFAULT_FROM_EMAIL,
+            [politician.email],
+            fail_silently=False,
+        )

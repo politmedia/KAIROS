@@ -648,3 +648,11 @@ msgstr "Diese Seite funktioniert nur komplett, wenn Javascript aktiviert ist."
 msgid "toggle_navigation"
 msgstr "Menu umschalten"
 
+msgid "import"
+msgstr "Importieren"
+
+msgid "csv_file"
+msgstr "CSV-Datei"
+
+msgid "politicians_import_success"
+msgstr "Es wurden %s Politiker importiert"

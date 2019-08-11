@@ -1,0 +1,19 @@
+{% extends 'core/party/index.html' %}
+
+{% load i18n filters %}
+
+{% block 'subcontent' %}
+<h2>{% trans 'import' %}</h2>
+    <form action="{% url 'party_upload_csv' user.username %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="csv_file">{% trans 'csv_file' %}</label>
+                    <input type="file" name="csv_file" id="csv_file" required="true">
+                </div>
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="{% trans 'save' %}">
+    </form>
+{% endblock %}
