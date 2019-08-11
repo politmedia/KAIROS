@@ -1,4 +1,4 @@
-from core.models import Politician, Question, Statistic, Answer, Category
+from core.models import Politician, Question, Statistic, Answer, Category, Candidacy, Bureau
 from django.http import JsonResponse
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
@@ -30,6 +30,15 @@ def v1(request):
         in Category.objects.all().order_by('id')
     ]
 
+    bureaux = [
+        {
+            'id': x.id,
+            'name': x.name
+        }
+        for x
+        in Bureau.objects.all().order_by('id')
+    ]
+
     politicians = []
 
     for x in Politician.objects.all().order_by('id'):
@@ -43,7 +52,8 @@ def v1(request):
                 'state':                   x.state.name if x.state.name else None,
                 'past_contributions':      x.past_contributions,
                 'future_plans':            x.future_plans,
-                'answers':                 []
+                'answers':                 [],
+                'candidacy':               []
             }
 
             if x.party:
@@ -66,21 +76,29 @@ def v1(request):
                     'note': a.note
                 })
 
+            for c in Candidacy.objects.filter(politician=x).order_by('id'):
+                p['candidacy'].append({
+                    'id': c.id,
+                    'bureau_id': c.bureau_id,
+                    'is_new': c.is_new
+                })
+
             politicians.append(p)
 
-    return JsonResponse({ 'politicians': politicians, 'questions': questions, 'categories': categories })
+    return JsonResponse({ 'politicians': politicians, 'questions': questions, 'categories': categories, 'bureaux': bureaux })
 
 
 class PoliticianViewSet(ReadOnlyModelViewSet):
     queryset = Politician.objects.filter(statistic__id__gt=0).distinct()
     serializer_class = serializers.PoliticianSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend,)
-    filter_fields = ('state','party','is_member_of_parliament')
+    filter_fields = ('state','party','is_member_of_parliament','candidacy__bureau_id')
     search_fields = (
         'first_name',
         'last_name',
         'state__name',
         'party__name',
         'party__shortname',
-        'party_other'
+        'party_other',
+        'candidacy__bureau__name'
     )

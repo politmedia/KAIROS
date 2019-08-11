@@ -77,6 +77,35 @@ class Category(models.Model):
         verbose_name_plural = _('categories')
 
 
+class Bureau(models.Model):
+    name                    = models.CharField(
+        max_length          = 50,
+        verbose_name        = _('name')
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = _('bureau')
+        verbose_name_plural = _('bureaux')
+
+
+class Candidacy(models.Model):
+    bureau                  = models.ForeignKey(
+        Bureau,
+        verbose_name        = _('bureau')
+    )
+    is_new                  = models.BooleanField(
+        default             = True,
+        verbose_name        = _('is_new')
+    )
+
+    class Meta:
+        verbose_name        = _('candidacy')
+        verbose_name_plural = _('candidacies')
+
+
 class Politician(models.Model):
     user                    = models.ForeignKey(
         User,
@@ -138,6 +167,11 @@ class Politician(models.Model):
         null                = True,
         blank               = True,
         verbose_name        = _('party_other')
+    )
+    candidacy               = models.ManyToManyField(
+        Candidacy,
+        blank               = True,
+        verbose_name        = _('candidacy')
     )
 
     def __str__(self):

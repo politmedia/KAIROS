@@ -311,9 +311,7 @@ new Vue({
   },
   mounted: function() {
     let currentUrl = new URL(location)
-
-    fetch(
-      '/api/v2/politicians/?' +
+    let test = '/api/v2/politicians/?' +
         new URLSearchParams(
           cleanParams({
             state: parseInt(currentUrl.searchParams.get('state')),
@@ -323,9 +321,12 @@ new Vue({
             party: parseInt(currentUrl.searchParams.get('party')),
             is_member_of_parliament: parseInt(
               currentUrl.searchParams.get('is_member')
-            )
+            ),
+            candidacy__bureau_id: parseInt(currentUrl.searchParams.get('bureau'))
           })
-        ).toString(),
+        ).toString()
+    fetch(
+      test,
       {
         credentials: 'same-origin',
         headers: {

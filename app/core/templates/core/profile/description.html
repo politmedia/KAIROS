@@ -62,6 +62,22 @@
             </div>
         </div>
 
+        {% if candidacies %}
+        <hr>
+        <div class="row">
+            <div class="col-md-12 mbm">
+                <strong>{% trans 'candidacies' %}</strong>
+            </div>
+            <div class="col-md-12">
+                {% for candidacy in candidacies %}
+                    <p class="socialmedia-link">
+                        {{ candidacy.bureau }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %}) 
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         {% if links %}
         <hr>
         <div class="row">
@@ -74,7 +90,7 @@
                         <i class="fa socialmedia-link-icon" aria-hidden="true"></i>
                         <a class="socialmedia-link-anchor" href="{{link.url}}"></a>
                     </p>
-                {%endfor%}
+                {% endfor %}
             </div>
         </div>
         {% endif %}

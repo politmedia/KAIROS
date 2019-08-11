@@ -7,10 +7,21 @@ from core.views import politician_statistic_view
 from django.core.urlresolvers import reverse
 
 
+class CandidacySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Candidacy
+        fields = (
+            'id',
+            'bureau_id',
+            'is_new'
+        )
+
+
 class PoliticianSerializer(serializers.ModelSerializer):
     thumbnail = serializers.SerializerMethodField()
     profile_link = serializers.SerializerMethodField()
     statistic = serializers.SerializerMethodField()
+    candidacy = CandidacySerializer(many=True)
 
     def get_thumbnail(self, instance):
         return (
@@ -66,5 +77,6 @@ class PoliticianSerializer(serializers.ModelSerializer):
             'image',
             'thumbnail',
             'profile_link',
-            'statistic'
+            'statistic',
+            'candidacy'
         )

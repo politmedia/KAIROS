@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 class PoliticianForm(forms.ModelForm):
     class Meta:
         model = Politician
-        exclude = ['unique_key', 'user']
+        exclude = ['unique_key', 'user', 'candidacy']
         widgets = {
             'image': ImagePreviewFileInput()
         }

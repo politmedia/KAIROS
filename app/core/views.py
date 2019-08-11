@@ -1,6 +1,6 @@
 from core.decorators import require_party_login
 from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
-from core.models import Politician, Question, State, Answer
+from core.models import Politician, Question, State, Answer, Candidacy, Bureau
 from core.models import Statistic, Category, Link, Party
 from core.tools import set_cookie, get_cookie
 from django.conf import settings
@@ -76,6 +76,7 @@ def candidates_view(request):
     categories      = (
         Category.objects.filter(statistic__id__gt=0).
         order_by('name').distinct())
+    bureaux         = Bureau.objects.all()
 
     category = request.GET.get('category', None)
     state    = request.GET.get('state', None)
@@ -92,6 +93,7 @@ def candidates_view(request):
         'parties'     : parties,
         'meta'        : default_meta,
         'has_cookie'  : has_cookie,
+        'bureaux'     : bureaux
     }
 
     if has_cookie:
@@ -228,6 +230,7 @@ def politician_view(request, politician_id):
         Link.objects.filter(politician=politician))
     cookie     = get_cookie(request, 'answers', {})
     answer_obs = []
+    candidacies = Candidacy.objects.filter(politician=politician)
 
     for a in answers:
         answer_obs.append({
@@ -253,8 +256,8 @@ def politician_view(request, politician_id):
             'links'          : links,
             'embed_url'      : embed_url_absolute,
             'meta'           : meta,
-            'base_url'       : settings.BASE_URL
-
+            'base_url'       : settings.BASE_URL,
+            'candidacies'    : candidacies
         }
     )
 
@@ -438,6 +441,56 @@ def politician_edit_questions_view(request, unique_key):
             'answers'    : answers
         }
     )
+
+
+def politician_edit_candidacies_view(request, unique_key):
+    if request.method == "GET":
+        politician = get_object_or_404(Politician, unique_key=unique_key)
+        candidacies  = Candidacy.objects.filter(politician=politician)
+        bureaux = Bureau.objects.all()
+        bureaux_candidacies = {}
+
+        for bureau in bureaux:
+            try:
+                answer = Candidacy.objects.filter(politician=politician, bureau=bureau).first()
+            except Candidacy.DoesNotExist:
+                answer = None
+
+            bureaux_candidacies.update({bureau: answer})
+
+        return render(
+            request,
+            'core/edit/candidacies.html',
+            {
+                'politician': politician,
+                'bureaux_candidacies': bureaux_candidacies
+            }
+        )
+    elif request.method == "POST":
+        bureau = get_object_or_404(Bureau, id=request.POST.get('bureau'))
+        politician = get_object_or_404(Politician, unique_key=unique_key)
+        answer = request.POST.get('answer')
+
+        try:
+            candidacy = Candidacy.objects.get(id=request.POST.get('candidacy'))
+        except Candidacy.DoesNotExist:
+            candidacy = Candidacy(bureau = bureau)
+        
+        if answer == "no_candidacy":
+            candidacy = Candidacy.objects.filter(politician=politician, bureau=bureau)
+            candidacy.delete()
+        elif answer == "new_candidacy":
+            candidacy.is_new = True
+            candidacy.save()
+            politician.candidacy.add(candidacy)
+        else:
+            candidacy.is_new = False
+            candidacy.save()
+            politician.candidacy.add(candidacy)        
+
+        messages.success(request, _('candidacy_saved_successfully'))
+
+        return redirect(reverse('politician_edit_candidacies', args=[unique_key]))
 
 
 def politician_answer_view(request, unique_key):

@@ -671,3 +671,30 @@ msgstr "This website is only fully operations if Javascript is enabled."
 #: templates/navbar.html:7
 msgid "toggle_navigation"
 msgstr "Toggle navigation"
+
+msgid "bureau"
+msgstr "Bureau"
+
+msgid "bureaux"
+msgstr "Bureaux"
+
+msgid "candidacy"
+msgstr "Candidacy"
+
+msgid "candidacies"
+msgstr "Candidacies"
+
+msgid "new_candidacy"
+msgstr "New to the office"
+
+msgid "old_candidacy"
+msgstr "Already in the office"
+
+msgid "no_candidacy"
+msgstr "No candidacy"
+
+msgid "candidacy_saved_successfully"
+msgstr "Candidacy saved successfully"
+
+msgid "sort_by_bureau"
+msgstr "Sort by bureau"

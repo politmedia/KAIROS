@@ -60,6 +60,10 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 
+class BureauAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(models.State,      StateAdmin)
@@ -67,3 +71,4 @@ admin.site.register(models.Party,      PartyAdmin)
 admin.site.register(models.Politician, PoliticianAdmin)
 admin.site.register(models.Category,   CategoryAdmin)
 admin.site.register(models.Question,   QuestionAdmin)
+admin.site.register(models.Bureau,     BureauAdmin)

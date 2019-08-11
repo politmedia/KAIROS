@@ -7,4 +7,7 @@
     <li role="presentation" {% if 'questions' in request.path %}class="active"{% endif %}>
         <a href="{% url 'politician_edit_questions' politician.unique_key %}">{% trans 'questions' %}</a>
     </li>
+    <li role="presentation" {% if 'candidacies' in request.path %}class="active"{% endif %}>
+        <a href="{% url 'politician_edit_candidacies' politician.unique_key %}">{% trans 'candidacies' %}</a>
+    </li>
 </ul>

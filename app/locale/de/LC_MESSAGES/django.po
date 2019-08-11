@@ -648,3 +648,29 @@ msgstr "Diese Seite funktioniert nur komplett, wenn Javascript aktiviert ist."
 msgid "toggle_navigation"
 msgstr "Menu umschalten"
 
+msgid "bureau"
+msgstr "Amt"
+
+msgid "bureaux"
+msgstr "Ämter"
+
+msgid "candidacy"
+msgstr "Kandidatur"
+
+msgid "candidacies"
+msgstr "Kandidaturen"
+
+msgid "new_candidacy"
+msgstr "Neu im Amt"
+
+msgid "old_candidacy"
+msgstr "Bereits im Amt"
+
+msgid "no_candidacy"
+msgstr "Keine Kandidatur"
+
+msgid "candidacy_saved_successfully"
+msgstr "Kandidatur erfolgreich gespeichert"
+
+msgid "sort_by_bureau"
+msgstr "Nach Amt sortieren"

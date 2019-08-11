@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-5ths col-lg-2">
                     <select name="party" class="form-control">
                         <option value="">{% trans 'filter_by_party' %}...</option>
                         <option disabled>─────────────────</option>
@@ -33,7 +33,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-5ths col-lg-2">
                     <select name="state" class="form-control">
                         <option value="">{% trans 'filter_by_state' %}...</option>
                         <option disabled>─────────────────</option>
@@ -47,7 +47,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-5ths col-lg-2">
                     <select name="category" class="form-control">
                         <option value="">{% trans 'sort_by_category' %}...</option>
                         <option disabled>─────────────────</option>
@@ -61,11 +61,25 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-5ths col-lg-2">
                     <select name="is_member" class="form-control">
                         <option value="">{% trans 'All candidates' %}</option>
                         <option value="1" {% if request.GET.is_member == '1' %}selected{% endif %}>{% trans 'Only current members of parliament' %}</option>
                         <option value="0" {% if request.GET.is_member == '0' %}selected{% endif %}>{% trans 'Only new candidates' %}</option>
+                    </select>
+                </div>
+                <div class="col-md-5ths col-lg-2">
+                    <select name="bureau" class="form-control">
+                        <option value="">{% trans 'sort_by_bureau' %}...</option>
+                        <option disabled>─────────────────</option>
+                        {% for bureau in bureaux %}
+                            <option
+                            value="{{ bureau.id }}"
+                            {% if request.GET.bureau == bureau.id|slugify %}selected{% endif %}
+                            >
+                                {{bureau.name}}
+                            </option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
