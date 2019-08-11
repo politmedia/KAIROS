@@ -747,11 +747,11 @@ def party_email_view(request, party_name):
                 recipients.append(politician)
         elif recipients_sel == 'questionaire_done':
             for politician in politicians:
-                if Answer.objects.filter(politician_id=politician.id).count() == questions_count:
+                if Answer.objects.filter(politician_id=politician.id).count() >= questions_count:
                     recipients.append(politician)
         elif recipients_sel == 'questionaire_open':
             for politician in politicians:
-                if Answer.objects.filter(politician_id=politician.id).count() == 0:
+                if Answer.objects.filter(politician_id=politician.id).count() < questions_count:
                     recipients.append(politician)
 
         if len(recipients) is not 0:
