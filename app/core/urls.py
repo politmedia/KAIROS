@@ -113,6 +113,10 @@ urlpatterns = [
         views.party_upload_csv,
         name='party_upload_csv'
     ),
+    url(r'^party/(?P<party_name>\w+)/email/$',
+        views.party_email_view,
+        name='party_email'
+    ),
     url(r'^party/(?P<party_name>\w+)/politician/add/$',
         views.party_politician_add_view,
         name='party_politician_add'

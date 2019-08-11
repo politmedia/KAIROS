@@ -727,6 +727,55 @@ def party_upload_csv(request, party_name):
     return redirect(reverse('party_dashboard', args=[party_name]))
 
 
+@require_party_login
+def party_email_view(request, party_name):
+    if request.method == 'GET':
+        return render(
+            request,
+            'core/party/party_email.html'
+        )
+    else:
+        recipients_sel = request.POST.get('recipients', None)
+        recipients = []
+        subject = request.POST.get('subject', None)
+        message = request.POST.get('message', None)
+        questions_count = Question.objects.all().count()
+        politicians = Politician.objects.filter().exclude(email='')
+
+        if recipients_sel == 'all':
+            for politician in politicians:
+                recipients.append(politician)
+        elif recipients_sel == 'questionaire_done':
+            for politician in politicians:
+                if Answer.objects.filter(politician_id=politician.id).count() >= questions_count:
+                    recipients.append(politician)
+        elif recipients_sel == 'questionaire_open':
+            for politician in politicians:
+                if Answer.objects.filter(politician_id=politician.id).count() < questions_count:
+                    recipients.append(politician)
+
+        if len(recipients) is not 0:
+            for recipient in recipients:
+                send_mail(
+                    subject.replace('$(first_name)', recipient.first_name).
+                            replace('$(last_name)', recipient.last_name),
+                    message.replace('$(first_name)', recipient.first_name).
+                            replace('$(last_name)', recipient.last_name).
+                            replace('$(url)', recipient.unique_url),
+                    settings.DEFAULT_FROM_EMAIL,
+                    [recipient.email],
+                    fail_silently=False)
+
+            messages.success(
+            request, _('politician_email_sent_successfull') % (
+                len(recipients)
+            ))
+        else:
+            messages.error(request, _('politician_email_zero_error'))
+
+        return redirect(reverse('party_dashboard', args=[party_name]))
+
+
 class PoliticianRegistrationView(FormView):
     model = Politician
     template_name = 'core/candidates/registration.html'

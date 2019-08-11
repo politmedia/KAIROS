@@ -39,6 +39,16 @@
             </a>
         </div>
         <div class="col-md-4">
+            <a href="{% url 'party_email' user.username %}" class="dashboard-link">
+                <div class="panel panel-primary dashboard-item">
+                    <div class="panel-heading">
+                        <i class="fa fa-envelope fa-5x"></i>
+                    </div>
+                    <p>{% trans 'email' %}</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
             <a href="{% url 'party_logout' user.username %}" class="dashboard-link">
                 <div class="panel panel-primary dashboard-item">
                     <div class="panel-heading">
