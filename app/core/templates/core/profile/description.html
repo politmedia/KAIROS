@@ -66,9 +66,7 @@
             </div>
             <div class="col-md-12">
                 {% for candidacy in candidacies %}
-                    <p class="socialmedia-link">
-                        {{ candidacy.mandate }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %}) 
-                    </p>
+                    <p>{{ candidacy.mandate }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %})</p>
                 {% endfor %}
             </div>
         </div>
