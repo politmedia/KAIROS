@@ -698,3 +698,42 @@ msgstr "Candidacy saved successfully"
 
 msgid "sort_by_bureau"
 msgstr "Sort by bureau"
+
+msgid "import"
+msgstr "Import"
+
+msgid "csv_file"
+msgstr "CSV file"
+
+msgid "politicians_import_success"
+msgstr "%s have been imported successfully"
+
+msgid "recipients"
+msgstr "Recipients"
+
+msgid "subject"
+msgstr "Subject"
+
+msgid "message"
+msgstr "Message"
+
+msgid "send"
+msgstr "Send"
+
+msgid "politician_email_sent_successfull"
+msgstr "The email has been successfully sent to %s recipients"
+
+msgid "politician_email_zero_error"
+msgstr "No recipients found"
+
+msgid "all"
+msgstr "All"
+
+msgid "questionaire_done"
+msgstr "Questionaire done"
+
+msgid "questionaire_open"
+msgstr "Questionaire open"
+
+msgid "placeholder"
+msgstr "Placeholder"

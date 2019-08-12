@@ -2,14 +2,13 @@ from core.decorators import require_party_login
 from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
 from core.models import Politician, Question, State, Answer, Candidacy, Bureau
 from core.models import Statistic, Category, Link, Party
-from core.tools import set_cookie, get_cookie
+from core.tools import set_cookie, get_cookie, send_mail_to_politician
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q, Sum
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -730,6 +729,106 @@ def party_politician_delete_view(request, party_name, politician_id):
     return redirect(reverse('party_dashboard', args=[party_name]))
 
 
+
+@require_party_login
+def party_import_view(request, party_name):
+    return render(
+        request,
+        'core/party/politicians_import.html'
+    )
+
+
+@require_party_login
+def party_upload_csv(request, party_name):
+    counter = 0
+
+    try:
+        csv = request.FILES["csv_file"]
+        data = csv.read().decode("utf-8")
+        lines = data.split("\n")
+
+        for line in lines:
+            try:
+                fields = line.split(",")
+                email = fields[2].strip()
+
+                if Politician.objects.filter(email=email).count() is 0:
+                    politician = Politician.objects.create(
+                        first_name = fields[0],
+                        last_name = fields[1],
+                        email = email,
+                        user_id = request.user.id
+                    )
+
+                    politician.save()
+
+                    send_mail_to_politician(request, politician)
+
+                    counter += 1
+                else:
+                    continue
+            except:
+                continue
+
+        messages.success(
+        request, _('politicians_import_success') % (
+            counter
+        ))
+    except:
+        messages.error(request, _('politician_add_error'))
+
+    return redirect(reverse('party_dashboard', args=[party_name]))
+
+
+@require_party_login
+def party_email_view(request, party_name):
+    if request.method == 'GET':
+        return render(
+            request,
+            'core/party/party_email.html'
+        )
+    else:
+        recipients_sel = request.POST.get('recipients', None)
+        recipients = []
+        subject = request.POST.get('subject', None)
+        message = request.POST.get('message', None)
+        questions_count = Question.objects.all().count()
+        politicians = Politician.objects.filter().exclude(email='')
+
+        if recipients_sel == 'all':
+            for politician in politicians:
+                recipients.append(politician)
+        elif recipients_sel == 'questionaire_done':
+            for politician in politicians:
+                if Answer.objects.filter(politician_id=politician.id).count() >= questions_count:
+                    recipients.append(politician)
+        elif recipients_sel == 'questionaire_open':
+            for politician in politicians:
+                if Answer.objects.filter(politician_id=politician.id).count() < questions_count:
+                    recipients.append(politician)
+
+        if len(recipients) is not 0:
+            for recipient in recipients:
+                send_mail(
+                    subject.replace('$(first_name)', recipient.first_name).
+                            replace('$(last_name)', recipient.last_name),
+                    message.replace('$(first_name)', recipient.first_name).
+                            replace('$(last_name)', recipient.last_name).
+                            replace('$(url)', recipient.unique_url),
+                    settings.DEFAULT_FROM_EMAIL,
+                    [recipient.email],
+                    fail_silently=False)
+
+            messages.success(
+            request, _('politician_email_sent_successfull') % (
+                len(recipients)
+            ))
+        else:
+            messages.error(request, _('politician_email_zero_error'))
+
+        return redirect(reverse('party_dashboard', args=[party_name]))
+
+
 class PoliticianRegistrationView(FormView):
     model = Politician
     template_name = 'core/candidates/registration.html'
@@ -745,6 +844,7 @@ class PoliticianRegistrationView(FormView):
         return super(PoliticianRegistrationView, self).get_context_data(*args, **kwargs)
 
     def form_valid(self, form, *args, **kwargs):
+        request = self.request
         unique_key = self.kwargs['unique_key']
         user = User.objects.get(registrationkey__unique_key=unique_key)
         politician = Politician.objects.create(
@@ -754,34 +854,9 @@ class PoliticianRegistrationView(FormView):
             user_id=user.id
         )
 
-        self.send_mail(politician)
+        send_mail_to_politician(request, politician)
 
         return super(PoliticianRegistrationView, self).form_valid(form)
-
-    def send_mail(self, politician):
-        profile_url = reverse(
-            'politician_edit_profile',
-            kwargs={'unique_key': politician.unique_key}
-        )
-        profile_url_absolute = self.request.build_absolute_uri(profile_url)
-        send_mail(
-            str(_('Freedomvote account link')),
-            dedent(str(_("""Hello %(first_name)s %(last_name)s,
-
-            You receive the link for your profile on Freedomvote: %(url)s
-
-            Keep this link and use it to login to your profile again.
-
-            Sincerely,
-            The Freedomvote Team""") % {
-                'url': profile_url_absolute,
-                'first_name': politician.first_name,
-                'last_name': politician.last_name
-            })),
-            settings.DEFAULT_FROM_EMAIL,
-            [politician.email],
-            fail_silently=False,
-        )
 
 
 class PoliticianRegistrationSendMailView(TemplateView):

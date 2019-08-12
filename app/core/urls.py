@@ -109,6 +109,18 @@ urlpatterns = [
         views.party_export_view,
         name='party_export'
     ),
+    url(r'^party/(?P<party_name>\w+)/import/$',
+        views.party_import_view,
+        name='party_import'
+    ),
+    url(r'^party/(?P<party_name>\w+)/upload_csv/$',
+        views.party_upload_csv,
+        name='party_upload_csv'
+    ),
+    url(r'^party/(?P<party_name>\w+)/email/$',
+        views.party_email_view,
+        name='party_email'
+    ),
     url(r'^party/(?P<party_name>\w+)/politician/add/$',
         views.party_politician_add_view,
         name='party_politician_add'

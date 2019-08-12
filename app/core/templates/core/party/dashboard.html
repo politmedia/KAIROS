@@ -22,9 +22,29 @@
             <a href="{% url 'party_export' user.username %}" class="dashboard-link">
                 <div class="panel panel-primary dashboard-item">
                     <div class="panel-heading">
-                        <i class="fa fa-table fa-5x"></i>
+                        <i class="fa fa-download fa-5x"></i>
                     </div>
                     <p>{% trans 'export' %}</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'party_import' user.username %}" class="dashboard-link">
+                <div class="panel panel-primary dashboard-item">
+                    <div class="panel-heading">
+                        <i class="fa fa-upload fa-5x"></i>
+                    </div>
+                    <p>{% trans 'import' %}</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'party_email' user.username %}" class="dashboard-link">
+                <div class="panel panel-primary dashboard-item">
+                    <div class="panel-heading">
+                        <i class="fa fa-envelope fa-5x"></i>
+                    </div>
+                    <p>{% trans 'email' %}</p>
                 </div>
             </a>
         </div>

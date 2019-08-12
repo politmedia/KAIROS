@@ -674,3 +674,42 @@ msgstr "Kandidatur erfolgreich gespeichert"
 
 msgid "sort_by_bureau"
 msgstr "Nach Amt sortieren"
+
+msgid "import"
+msgstr "Importieren"
+
+msgid "csv_file"
+msgstr "CSV-Datei"
+
+msgid "politicians_import_success"
+msgstr "Es wurden %s Politiker importiert"
+
+msgid "recipients"
+msgstr "Empfänger"
+
+msgid "subject"
+msgstr "Betreff"
+
+msgid "message"
+msgstr "Nachricht"
+
+msgid "send"
+msgstr "Senden"
+
+msgid "politician_email_sent_successfull"
+msgstr "Die E-Mail wurde erfolgreich an %s Empfänger verschickt"
+
+msgid "politician_email_zero_error"
+msgstr "Es wurden keine Empfänger gefunden"
+
+msgid "all"
+msgstr "Alle"
+
+msgid "questionaire_done"
+msgstr "Fragebogen ausgefüllt"
+
+msgid "questionaire_open"
+msgstr "Fragebogen offen"
+
+msgid "placeholder"
+msgstr "Platzhalter"
