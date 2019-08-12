@@ -1,4 +1,4 @@
-from core.models import Politician, Question, Statistic, Answer, Category, Candidacy, Bureau
+from core.models import Politician, Question, Statistic, Answer, Category, Candidacy, Mandate
 from django.http import JsonResponse
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
@@ -30,13 +30,13 @@ def v1(request):
         in Category.objects.all().order_by('id')
     ]
 
-    bureaux = [
+    mandates = [
         {
             'id': x.id,
             'name': x.name
         }
         for x
-        in Bureau.objects.all().order_by('id')
+        in Mandate.objects.all().order_by('id')
     ]
 
     politicians = []
@@ -47,7 +47,6 @@ def v1(request):
                 'id':                      x.id,
                 'first_name':              x.first_name if x.first_name else None,
                 'last_name':               x.last_name if x.last_name else None,
-                'is_member_of_parliament': x.is_member_of_parliament,
                 'image':                   x.image.url if x.image else None,
                 'state':                   x.state.name if x.state.name else None,
                 'past_contributions':      x.past_contributions,
@@ -79,20 +78,20 @@ def v1(request):
             for c in Candidacy.objects.filter(politician=x).order_by('id'):
                 p['candidacy'].append({
                     'id': c.id,
-                    'bureau_id': c.bureau_id,
+                    'mandate_id': c.mandate_id,
                     'is_new': c.is_new
                 })
 
             politicians.append(p)
 
-    return JsonResponse({ 'politicians': politicians, 'questions': questions, 'categories': categories, 'bureaux': bureaux })
+    return JsonResponse({ 'politicians': politicians, 'questions': questions, 'categories': categories, 'mandates': mandates })
 
 
 class PoliticianViewSet(ReadOnlyModelViewSet):
     queryset = Politician.objects.filter(statistic__id__gt=0).distinct()
     serializer_class = serializers.PoliticianSerializer
     filter_backends = (SearchFilter, DjangoFilterBackend,)
-    filter_fields = ('state','party','is_member_of_parliament','candidacy__bureau_id')
+    filter_fields = ('state','party','candidacy__mandate_id')
     search_fields = (
         'first_name',
         'last_name',
@@ -100,5 +99,5 @@ class PoliticianViewSet(ReadOnlyModelViewSet):
         'party__name',
         'party__shortname',
         'party_other',
-        'candidacy__bureau__name'
+        'candidacy__mandate__name'
     )

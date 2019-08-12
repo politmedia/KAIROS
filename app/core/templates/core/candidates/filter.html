@@ -69,15 +69,15 @@
                     </select>
                 </div>
                 <div class="col-md-5ths col-lg-2">
-                    <select name="bureau" class="form-control">
-                        <option value="">{% trans 'sort_by_bureau' %}...</option>
+                    <select name="mandate" class="form-control">
+                        <option value="">{% trans 'sort_by_mandate' %}...</option>
                         <option disabled>─────────────────</option>
-                        {% for bureau in bureaux %}
+                        {% for mandate in mandates %}
                             <option
-                            value="{{ bureau.id }}"
-                            {% if request.GET.bureau == bureau.id|slugify %}selected{% endif %}
+                            value="{{ mandate.id }}"
+                            {% if request.GET.mandate == mandate.id|slugify %}selected{% endif %}
                             >
-                                {{bureau.name}}
+                                {{mandate.name}}
                             </option>
                         {% endfor %}
                     </select>

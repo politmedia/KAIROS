@@ -1,6 +1,6 @@
 from core.decorators import require_party_login
 from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
-from core.models import Politician, Question, State, Answer, Candidacy, Bureau
+from core.models import Politician, Question, State, Answer, Candidacy, Mandate
 from core.models import Statistic, Category, Link, Party
 from core.tools import set_cookie, get_cookie, send_mail_to_politician
 from django.conf import settings
@@ -75,7 +75,7 @@ def candidates_view(request):
     categories      = (
         Category.objects.filter(statistic__id__gt=0).
         order_by('name').distinct())
-    bureaux         = Bureau.objects.all()
+    mandates        = Mandate.objects.all()
 
     category = request.GET.get('category', None)
     state    = request.GET.get('state', None)
@@ -92,7 +92,7 @@ def candidates_view(request):
         'parties'     : parties,
         'meta'        : default_meta,
         'has_cookie'  : has_cookie,
-        'bureaux'     : bureaux
+        'mandates'    : mandates
     }
 
     if has_cookie:
@@ -446,37 +446,37 @@ def politician_edit_candidacies_view(request, unique_key):
     if request.method == "GET":
         politician = get_object_or_404(Politician, unique_key=unique_key)
         candidacies  = Candidacy.objects.filter(politician=politician)
-        bureaux = Bureau.objects.all()
-        bureaux_candidacies = {}
+        mandates = Mandate.objects.all()
+        mandates_candidacies = {}
 
-        for bureau in bureaux:
+        for mandate in mandates:
             try:
-                answer = Candidacy.objects.filter(politician=politician, bureau=bureau).first()
+                answer = Candidacy.objects.filter(politician=politician, mandate=mandate).first()
             except Candidacy.DoesNotExist:
                 answer = None
 
-            bureaux_candidacies.update({bureau: answer})
+            mandates_candidacies.update({mandate: answer})
 
         return render(
             request,
             'core/edit/candidacies.html',
             {
                 'politician': politician,
-                'bureaux_candidacies': bureaux_candidacies
+                'mandates_candidacies': mandates_candidacies
             }
         )
     elif request.method == "POST":
-        bureau = get_object_or_404(Bureau, id=request.POST.get('bureau'))
+        mandate = get_object_or_404(Mandate, id=request.POST.get('mandate'))
         politician = get_object_or_404(Politician, unique_key=unique_key)
         answer = request.POST.get('answer')
 
         try:
             candidacy = Candidacy.objects.get(id=request.POST.get('candidacy'))
         except Candidacy.DoesNotExist:
-            candidacy = Candidacy(bureau = bureau)
+            candidacy = Candidacy(mandate=mandate)
         
         if answer == "no_candidacy":
-            candidacy = Candidacy.objects.filter(politician=politician, bureau=bureau)
+            candidacy = Candidacy.objects.filter(politician=politician, mandate=mandate)
             candidacy.delete()
         elif answer == "new_candidacy":
             candidacy.is_new = True

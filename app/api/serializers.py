@@ -12,7 +12,7 @@ class CandidacySerializer(serializers.ModelSerializer):
         model = models.Candidacy
         fields = (
             'id',
-            'bureau_id',
+            'mandate_id',
             'is_new'
         )
 
@@ -73,7 +73,6 @@ class PoliticianSerializer(serializers.ModelSerializer):
             'state_name',
             'future_plans',
             'past_contributions',
-            'is_member_of_parliament',
             'image',
             'thumbnail',
             'profile_link',

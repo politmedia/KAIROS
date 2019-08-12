@@ -77,7 +77,7 @@ class Category(models.Model):
         verbose_name_plural = _('categories')
 
 
-class Bureau(models.Model):
+class Mandate(models.Model):
     name                    = models.CharField(
         max_length          = 50,
         verbose_name        = _('name')
@@ -87,14 +87,14 @@ class Bureau(models.Model):
         return self.name
 
     class Meta:
-        verbose_name        = _('bureau')
-        verbose_name_plural = _('bureaux')
+        verbose_name        = _('mandate')
+        verbose_name_plural = _('mandates')
 
 
 class Candidacy(models.Model):
-    bureau                  = models.ForeignKey(
-        Bureau,
-        verbose_name        = _('bureau')
+    mandate                  = models.ForeignKey(
+        Mandate,
+        verbose_name        = _('mandate')
     )
     is_new                  = models.BooleanField(
         default             = True,
@@ -133,10 +133,6 @@ class Politician(models.Model):
         null                = True,
         blank               = True,
         verbose_name        = _('image')
-    )
-    is_member_of_parliament = models.BooleanField(
-        default             = False,
-        verbose_name        = _('is_member_of_parliament')
     )
     past_contributions      = models.TextField(
         blank               = True,

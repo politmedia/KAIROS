@@ -10,15 +10,15 @@
 <h2>{% trans 'candidacies' %}</h2>
 <table class="table table-striped">
     <tbody>
-        {% for bureau, candidacy in bureaux_candidacies.items %}
+        {% for mandate, candidacy in mandates_candidacies.items %}
         <tr>
             <td>
                 <div class="row question-row">
-                    <div class="col-sm-6 col-md-6 col-lg-7 col-xs-12">{{ bureau }}</div>
+                    <div class="col-sm-6 col-md-6 col-lg-7 col-xs-12">{{ mandate }}</div>
                     <div class="col-sm-6 col-md-6 col-lg-5 col-xs-12">
                         <form action="{% url 'politician_edit_candidacies' unique_key=politician.unique_key %}" method="POST">
                             {% csrf_token %}
-                            <input type="hidden" name="bureau" value="{{ bureau.id }}" />
+                            <input type="hidden" name="mandate" value="{{ mandate.id }}" />
                             {% if candidacy %}
                             <input type="hidden" name="candidacy" value="{{ candidacy.id }}" />
                             {% endif %}

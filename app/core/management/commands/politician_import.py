@@ -26,7 +26,6 @@ class Command(BaseCommand):
                             first_name = row.get('first_name'),
                             last_name  = row.get('last_name'),
                             email      = row.get('email'),
-                            is_member_of_parliament = row.get('is_member_of_parliament'),
                             party = Party.objects.get(shortname=row.get('party')),
                             user = User.objects.get(username=row.get('user')),
                         )
