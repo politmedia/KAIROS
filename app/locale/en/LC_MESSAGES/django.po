@@ -214,10 +214,6 @@ msgstr "User"
 msgid "image"
 msgstr "Image"
 
-#: core/models.py:110 core/templates/core/profile/description.html:50
-msgid "is_member_of_parliament"
-msgstr "Member of parliament"
-
 #: core/models.py:114 core/templates/core/profile/description.html:42
 msgid "past_contributions"
 msgstr "Post contributions on this subject"
@@ -671,6 +667,33 @@ msgstr "This website is only fully operations if Javascript is enabled."
 #: templates/navbar.html:7
 msgid "toggle_navigation"
 msgstr "Toggle navigation"
+
+msgid "mandate"
+msgstr "Mandate"
+
+msgid "mandates"
+msgstr "Mandates"
+
+msgid "candidacy"
+msgstr "Candidacy"
+
+msgid "candidacies"
+msgstr "Candidacies"
+
+msgid "new_candidacy"
+msgstr "New to the office"
+
+msgid "old_candidacy"
+msgstr "Already in the office"
+
+msgid "no_candidacy"
+msgstr "No candidacy"
+
+msgid "candidacy_saved_successfully"
+msgstr "Candidacy saved successfully"
+
+msgid "sort_by_mandate"
+msgstr "Sort by mandate"
 
 msgid "import"
 msgstr "Import"

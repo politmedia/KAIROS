@@ -207,10 +207,6 @@ msgstr "Benutzer"
 msgid "image"
 msgstr "Bild"
 
-#: core/models.py:110 core/templates/core/profile/description.html:50
-msgid "is_member_of_parliament"
-msgstr "Bisheriges Mitglied National- oder Ständerat"
-
 #: core/models.py:114 core/templates/core/profile/description.html:42
 msgid "past_contributions"
 msgstr "Bisherige Beiträge zum Thema"
@@ -647,6 +643,33 @@ msgstr "Diese Seite funktioniert nur komplett, wenn Javascript aktiviert ist."
 #: templates/navbar.html:7
 msgid "toggle_navigation"
 msgstr "Menu umschalten"
+
+msgid "mandate"
+msgstr "Amt"
+
+msgid "mandates"
+msgstr "Ämter"
+
+msgid "candidacy"
+msgstr "Kandidatur"
+
+msgid "candidacies"
+msgstr "Kandidaturen"
+
+msgid "new_candidacy"
+msgstr "Neu im Amt"
+
+msgid "old_candidacy"
+msgstr "Bereits im Amt"
+
+msgid "no_candidacy"
+msgstr "Keine Kandidatur"
+
+msgid "candidacy_saved_successfully"
+msgstr "Kandidatur erfolgreich gespeichert"
+
+msgid "sort_by_mandate"
+msgstr "Nach Amt sortieren"
 
 msgid "import"
 msgstr "Importieren"

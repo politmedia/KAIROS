@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 class PoliticianForm(forms.ModelForm):
     class Meta:
         model = Politician
-        exclude = ['unique_key', 'user']
+        exclude = ['unique_key', 'user', 'candidacy']
         widgets = {
             'image': ImagePreviewFileInput()
         }
@@ -55,7 +55,7 @@ class PoliticianForm(forms.ModelForm):
 class PartyPoliticianForm(forms.ModelForm):
     class Meta:
         model = Politician
-        fields = ['first_name', 'last_name', 'email', 'state', 'is_member_of_parliament', 'user']
+        fields = ['first_name', 'last_name', 'email', 'state', 'user']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')

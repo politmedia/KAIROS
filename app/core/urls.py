@@ -47,6 +47,10 @@ urlpatterns = [
         views.politician_edit_questions_view,
         name='politician_edit_questions'
     ),
+    url(r'^politician/(?P<unique_key>[^/]+)/edit/candidacies/$',
+        views.politician_edit_candidacies_view,
+        name='politician_edit_candidacies'
+    ),
     url(r'^politician/(?P<unique_key>[^/]+)/answer/$',
         views.politician_answer_view,
         name='politician_answer'

@@ -207,10 +207,6 @@ msgstr "Utilisateur"
 msgid "image"
 msgstr "Image"
 
-#: core/models.py:110 core/templates/core/profile/description.html:50
-msgid "is_member_of_parliament"
-msgstr "Ancien membre du Conseil National ou le Conseil des Etats "
-
 #: core/models.py:114 core/templates/core/profile/description.html:42
 msgid "past_contributions"
 msgstr "Contributions précédentes sur le sujet"

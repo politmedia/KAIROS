@@ -47,10 +47,6 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12"><strong>{% trans 'is_member_of_parliament' %}:</strong> {% if politician.is_member_of_parliament %}{% trans 'yes' %}{%else%}{% trans 'no' %}{%endif%}</div>
-        </div>
-
-        <div class="row">
             <div class="col-md-12">
                 <strong> {% trans 'show_own_spider' %}:</strong>
                 {% if 'statistics' in request.COOKIES and request.COOKIES.statistics != '{}' %}
@@ -61,6 +57,20 @@
                 {% endif %}
             </div>
         </div>
+
+        {% if candidacies %}
+        <hr>
+        <div class="row">
+            <div class="col-md-12 mbm">
+                <strong>{% trans 'candidacies' %}</strong>
+            </div>
+            <div class="col-md-12">
+                {% for candidacy in candidacies %}
+                    <p>{{ candidacy.mandate }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %})</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
 
         {% if links %}
         <hr>
@@ -74,7 +84,7 @@
                         <i class="fa socialmedia-link-icon" aria-hidden="true"></i>
                         <a class="socialmedia-link-anchor" href="{{link.url}}"></a>
                     </p>
-                {%endfor%}
+                {% endfor %}
             </div>
         </div>
         {% endif %}

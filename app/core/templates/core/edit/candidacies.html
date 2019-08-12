@@ -1,0 +1,38 @@
+{% extends 'core/edit/index.html' %}
+
+{% load i18n static %}
+
+{% block 'scripts' %}
+<script src="{% static 'js/edit_candidacy.js' %}"></script>
+{% endblock %}
+
+{% block 'subcontent' %}
+<h2>{% trans 'candidacies' %}</h2>
+<table class="table table-striped">
+    <tbody>
+        {% for mandate, candidacy in mandates_candidacies.items %}
+        <tr>
+            <td>
+                <div class="row question-row">
+                    <div class="col-sm-6 col-md-6 col-lg-7 col-xs-12">{{ mandate }}</div>
+                    <div class="col-sm-6 col-md-6 col-lg-5 col-xs-12">
+                        <form action="{% url 'politician_edit_candidacies' unique_key=politician.unique_key %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="mandate" value="{{ mandate.id }}" />
+                            {% if candidacy %}
+                            <input type="hidden" name="candidacy" value="{{ candidacy.id }}" />
+                            {% endif %}
+                            <select name="answer" class="form-control answer">
+                                <option value="no_candidacy" {% if not candidacy %}selected="selected"{% endif %}>{% trans 'no_candidacy' %}</option>
+                                <option value="new_candidacy" {% if candidacy and candidacy.is_new %}selected="selected"{% endif %}>{% trans 'new_candidacy' %}</option>
+                                <option value="old_candidacy" {% if candidacy and not candidacy.is_new %}selected="selected"{% endif %}>{% trans 'old_candidacy' %}</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

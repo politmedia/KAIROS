@@ -208,10 +208,6 @@ msgstr "Gebruiker"
 msgid "image"
 msgstr "Afbeelding"
 
-#: core/models.py:110 core/templates/core/profile/description.html:50
-msgid "is_member_of_parliament"
-msgstr "Zittend parlementslid"
-
 #: core/models.py:114 core/templates/core/profile/description.html:42
 msgid "past_contributions"
 msgstr "Eerdere bijdragen over dit onderwerp"

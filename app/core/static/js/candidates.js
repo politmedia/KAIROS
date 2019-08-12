@@ -321,9 +321,7 @@ new Vue({
             search: currentUrl.searchParams.get('search'),
             evaluate: parseInt(currentUrl.searchParams.get('evaluate')),
             party: parseInt(currentUrl.searchParams.get('party')),
-            is_member_of_parliament: parseInt(
-              currentUrl.searchParams.get('is_member')
-            )
+            candidacy__mandate_id: parseInt(currentUrl.searchParams.get('mandate'))
           })
         ).toString(),
       {

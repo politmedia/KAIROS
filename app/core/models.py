@@ -77,6 +77,35 @@ class Category(models.Model):
         verbose_name_plural = _('categories')
 
 
+class Mandate(models.Model):
+    name                    = models.CharField(
+        max_length          = 50,
+        verbose_name        = _('name')
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = _('mandate')
+        verbose_name_plural = _('mandates')
+
+
+class Candidacy(models.Model):
+    mandate                  = models.ForeignKey(
+        Mandate,
+        verbose_name        = _('mandate')
+    )
+    is_new                  = models.BooleanField(
+        default             = True,
+        verbose_name        = _('is_new')
+    )
+
+    class Meta:
+        verbose_name        = _('candidacy')
+        verbose_name_plural = _('candidacies')
+
+
 class Politician(models.Model):
     user                    = models.ForeignKey(
         User,
@@ -104,10 +133,6 @@ class Politician(models.Model):
         null                = True,
         blank               = True,
         verbose_name        = _('image')
-    )
-    is_member_of_parliament = models.BooleanField(
-        default             = False,
-        verbose_name        = _('is_member_of_parliament')
     )
     past_contributions      = models.TextField(
         blank               = True,
@@ -138,6 +163,11 @@ class Politician(models.Model):
         null                = True,
         blank               = True,
         verbose_name        = _('party_other')
+    )
+    candidacy               = models.ManyToManyField(
+        Candidacy,
+        blank               = True,
+        verbose_name        = _('candidacy')
     )
 
     def __str__(self):
