@@ -1,6 +1,7 @@
 {% extends 'core/edit/index.html' %}
 
 {% load i18n static %}
+{% load filters %}
 
 {% block 'scripts' %}
 <script src="{% static 'js/edit_candidacy.js' %}"></script>
@@ -14,25 +15,42 @@
         <tr>
             <td>
                 <div class="row question-row">
-                    <div class="col-sm-6 col-md-6 col-lg-7 col-xs-12">{{ mandate }}</div>
-                    <div class="col-sm-6 col-md-6 col-lg-5 col-xs-12">
-                        <form action="{% url 'politician_edit_candidacies' unique_key=politician.unique_key %}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="mandate" value="{{ mandate.id }}" />
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">{{ mandate }}</div>
+                    <form action="{% url 'politician_edit_candidacies' unique_key=politician.unique_key %}" id="{{ candidacy.id }}" method="POST">
+                        {% if candidacy %}
+                        <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12">
+                            {% else %}
+                            <div class="col-sm-6 col-md-6 col-lg-6 col-xs-12">
+                                {% endif %}
+                                {% csrf_token %}
+                                <input type="hidden" name="mandate" value="{{ mandate.id }}" />
+                                {% if candidacy %}
+                                <input type="hidden" name="candidacy" value="{{ candidacy.id }}" />
+                                <input type="hidden" name="constituency" value="{{ constituency.id }}" />
+                                {% endif %}
+                                <select name="answer" class="form-control answer">
+                                    <option value="no_candidacy" {% if not candidacy %}selected="selected"{% endif %}>{% trans 'no_candidacy' %}</option>
+                                    <option value="new_candidacy" {% if candidacy and candidacy.is_new %}selected="selected"{% endif %}>{% trans 'new_candidacy' %}</option>
+                                    <option value="old_candidacy" {% if candidacy and not candidacy.is_new %}selected="selected"{% endif %}>{% trans 'old_candidacy' %}</option>
+                                </select>
+                            </div>
                             {% if candidacy %}
-                            <input type="hidden" name="candidacy" value="{{ candidacy.id }}" />
+                            <div class="col-sm-3 col-md-3 col-lg-3 col-xs-12">
+                                {% csrf_token %}
+                                <input type="hidden" name="mandate" value="{{ mandate.id }}" />
+                                <input type="hidden" name="candidacy" value="{{ candidacy.id }}" />
+                                <select name="constituency" id="{{ candidacy.id }}" class="form-control answer">
+                                    {% for constituency in mandates_constituencies|get_item:mandate %}
+                                    <option value="{{ constituency.id }}" {% if candidacy.constituency == constituency %}selected="selected"{% endif %}>{% trans constituency.name %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                             {% endif %}
-                            <select name="answer" class="form-control answer">
-                                <option value="no_candidacy" {% if not candidacy %}selected="selected"{% endif %}>{% trans 'no_candidacy' %}</option>
-                                <option value="new_candidacy" {% if candidacy and candidacy.is_new %}selected="selected"{% endif %}>{% trans 'new_candidacy' %}</option>
-                                <option value="old_candidacy" {% if candidacy and not candidacy.is_new %}selected="selected"{% endif %}>{% trans 'old_candidacy' %}</option>
-                            </select>
                         </form>
                     </div>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}

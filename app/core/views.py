@@ -1,6 +1,6 @@
 from core.decorators import require_party_login
 from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
-from core.models import Politician, Question, State, Answer, Candidacy, Mandate
+from core.models import Politician, Question, State, Answer, Candidacy, Mandate, Constituency
 from core.models import Statistic, Category, Link, Party
 from core.tools import set_cookie, get_cookie, send_mail_to_politician
 from django.conf import settings
@@ -229,7 +229,7 @@ def politician_view(request, politician_id):
         Link.objects.filter(politician=politician))
     cookie     = get_cookie(request, 'answers', {})
     answer_obs = []
-    candidacies = Candidacy.objects.filter(politician=politician)
+    candidacies = Candidacy.objects.filter(politician=politician).order_by('-constituency')
 
     for a in answers:
         answer_obs.append({
@@ -448,44 +448,52 @@ def politician_edit_candidacies_view(request, unique_key):
         candidacies  = Candidacy.objects.filter(politician=politician)
         mandates = Mandate.objects.all()
         mandates_candidacies = {}
+        mandates_constituencies = {}
 
         for mandate in mandates:
             try:
                 answer = Candidacy.objects.filter(politician=politician, mandate=mandate).first()
+                constituency = Constituency.objects.filter(mandate=mandate).all().order_by('name')
             except Candidacy.DoesNotExist:
                 answer = None
 
             mandates_candidacies.update({mandate: answer})
+            mandates_constituencies.update({mandate: constituency})
 
         return render(
             request,
             'core/edit/candidacies.html',
             {
                 'politician': politician,
-                'mandates_candidacies': mandates_candidacies
+                'mandates_candidacies': mandates_candidacies,
+                'mandates_constituencies': mandates_constituencies
             }
         )
     elif request.method == "POST":
         mandate = get_object_or_404(Mandate, id=request.POST.get('mandate'))
         politician = get_object_or_404(Politician, unique_key=unique_key)
         answer = request.POST.get('answer')
+        constituency = request.POST.get('constituency')
 
         try:
             candidacy = Candidacy.objects.get(id=request.POST.get('candidacy'))
         except Candidacy.DoesNotExist:
             candidacy = Candidacy(mandate=mandate)
+            constituency = Constituency.objects.filter(mandate=mandate).order_by('name').first()
         
         if answer == "no_candidacy":
             candidacy = Candidacy.objects.filter(politician=politician, mandate=mandate)
             candidacy.delete()
-        elif answer == "new_candidacy":
-            candidacy.is_new = True
+        elif answer == "new_candidacy" or answer == "old_candidacy":
+            if not isinstance(constituency, Constituency):
+                constituency = Constituency.objects.filter(id=request.POST.get('constituency')).first()
+            if answer == "new_candidacy":
+                candidacy.is_new = True
+            else:
+                candidacy.is_new = False
+            candidacy.constituency = constituency
             candidacy.save()
-            politician.candidacy.add(candidacy)
-        else:
-            candidacy.is_new = False
-            candidacy.save()
-            politician.candidacy.add(candidacy)        
+            politician.candidacy.add(candidacy)     
 
         messages.success(request, _('candidacy_saved_successfully'))
 

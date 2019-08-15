@@ -64,6 +64,10 @@ class MandateAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
+class ConstituencyAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(models.State,      StateAdmin)
@@ -72,3 +76,4 @@ admin.site.register(models.Politician, PoliticianAdmin)
 admin.site.register(models.Category,   CategoryAdmin)
 admin.site.register(models.Question,   QuestionAdmin)
 admin.site.register(models.Mandate,    MandateAdmin)
+admin.site.register(models.Constituency, ConstituencyAdmin)

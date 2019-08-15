@@ -709,3 +709,9 @@ msgstr "Fragebogen offen"
 
 msgid "placeholder"
 msgstr "Platzhalter"
+
+msgid "constituency"
+msgstr "Wahlkreis"
+
+msgid "constituencies"
+msgstr "Wahlkreise"

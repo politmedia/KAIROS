@@ -15,6 +15,20 @@ def generate_url():
     return key
 
 
+class Constituency(models.Model):
+    name                    = models.CharField(
+        max_length          = 50,
+        verbose_name        = _('name')
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name        = _('constituency')
+        verbose_name_plural = _('constituencies')
+
+
 class State(models.Model):
     name                    = models.CharField(
         max_length          = 50,
@@ -82,6 +96,10 @@ class Mandate(models.Model):
         max_length          = 50,
         verbose_name        = _('name')
     )
+    constituency            = models.ManyToManyField(
+        Constituency,
+        verbose_name        = _('constituency')
+    )
 
     def __str__(self):
         return self.name
@@ -92,7 +110,7 @@ class Mandate(models.Model):
 
 
 class Candidacy(models.Model):
-    mandate                  = models.ForeignKey(
+    mandate                 = models.ForeignKey(
         Mandate,
         verbose_name        = _('mandate')
     )
@@ -100,6 +118,17 @@ class Candidacy(models.Model):
         default             = True,
         verbose_name        = _('is_new')
     )
+    constituency            = models.ForeignKey(
+        Constituency,
+        verbose_name        = _('constituency'),
+        null                = True
+    )
+
+    def __str__(self):
+        if self.mandate.name is not None and self.constituency.name is not None:
+            return u'%s, %s' % (self.mandate.name, self.constituency.name)
+        elif self.mandate.name is not None:
+            return self.mandate.name
 
     class Meta:
         verbose_name        = _('candidacy')

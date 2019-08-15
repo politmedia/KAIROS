@@ -733,3 +733,9 @@ msgstr "Questionaire open"
 
 msgid "placeholder"
 msgstr "Placeholder"
+
+msgid "constituency"
+msgstr "Constituency"
+
+msgid "constituencies"
+msgstr "Constituencies"
