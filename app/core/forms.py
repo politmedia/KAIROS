@@ -72,8 +72,8 @@ class RegistrationForm(forms.Form):
     first_name = forms.CharField(label=_('first_name'), max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
     last_name = forms.CharField(label=_('last_name'), max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
     email = forms.EmailField(label=_('email'), widget=forms.EmailInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
-    languages = Language.objects.all()
-    language = forms.ChoiceField(label=_('language'), widget=forms.Select(choices=languages,attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+    choices = Language.objects.all()
+    language = forms.ModelChoiceField(label=_('language'),queryset=choices, widget=forms.Select(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
