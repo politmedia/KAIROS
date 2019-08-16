@@ -888,7 +888,8 @@ class PoliticianRegistrationView(FormView):
             first_name=form.data['first_name'],
             last_name=form.data['last_name'],
             email=form.data['email'],
-            user_id=user.id
+            user_id=user.id,
+            language_id=form.data['language']
         )
 
         send_mail_to_politician(request, politician)
