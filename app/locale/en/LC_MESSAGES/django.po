@@ -321,10 +321,6 @@ msgstr "Search"
 msgid "filter_by_party"
 msgstr "Filter by party"
 
-#: core/templates/core/candidates/filter.html:38
-msgid "filter_by_state"
-msgstr "Filter by state"
-
 #: core/templates/core/candidates/filter.html:52
 msgid "sort_by_category"
 msgstr "Sort by category"
@@ -739,3 +735,6 @@ msgstr "Constituency"
 
 msgid "constituencies"
 msgstr "Constituencies"
+
+msgid "filter_by_constituency"
+msgstr "Filter by constituency"

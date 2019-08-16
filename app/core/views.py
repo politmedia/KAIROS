@@ -1,6 +1,6 @@
 from core.decorators import require_party_login
 from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
-from core.models import Politician, Question, State, Answer, Candidacy, Mandate, Constituency
+from core.models import Politician, Question, Answer, Candidacy, Mandate, Constituency
 from core.models import Statistic, Category, Link, Party
 from core.tools import set_cookie, get_cookie, send_mail_to_politician
 from django.conf import settings
@@ -70,15 +70,15 @@ def initial_edit_view(request, lang):
 
 
 def candidates_view(request):
-    states          = State.objects.all().order_by('sort', 'name')
+    constituencies  = Constituency.objects.all().order_by('name')
     parties         = Party.objects.all().order_by('name')
     categories      = (
         Category.objects.filter(statistic__id__gt=0).
         order_by('name').distinct())
     mandates        = Mandate.objects.all()
 
+    constituency = request.GET.get('constituency', None)
     category = request.GET.get('category', None)
-    state    = request.GET.get('state', None)
     search   = request.GET.get('search', None)
 
     session_answers    = get_cookie(request, 'answers',    {})
@@ -87,12 +87,12 @@ def candidates_view(request):
     has_cookie = len(session_answers) > 0 and len(session_statistics) > 0
 
     context = {
-        'categories'  : categories,
-        'states'      : states,
-        'parties'     : parties,
-        'meta'        : default_meta,
-        'has_cookie'  : has_cookie,
-        'mandates'    : mandates
+        'categories'    : categories,
+        'parties'       : parties,
+        'meta'          : default_meta,
+        'has_cookie'    : has_cookie,
+        'mandates'      : mandates,
+        'constituencies': constituencies
     }
 
     if has_cookie:
@@ -710,14 +710,11 @@ def party_export_view(request, party_name):
     writer.writerow([
         force_text(_('first_name')),
         force_text(_('last_name')),
-        force_text(_('state')),
         force_text(_('unique_url'))
     ])
 
     for p in politicians:
-        state = p.state.name if p.state else '-'
-
-        cols = [p.first_name, p.last_name, state, p.unique_url]
+        cols = [p.first_name, p.last_name, p.unique_url]
         writer.writerow([c.encode('latin1')
                         if c is not None else '' for c in cols
                          ])

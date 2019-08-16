@@ -7,10 +7,6 @@ from django.contrib.auth.models import User
 from . import models
 
 
-class StateAdmin(admin.ModelAdmin):
-    list_display = ['name', 'sort']
-
-
 class PartyAdmin(admin.ModelAdmin):
     list_display = ['name', 'shortname']
 
@@ -70,7 +66,6 @@ class ConstituencyAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(models.State,      StateAdmin)
 admin.site.register(models.Party,      PartyAdmin)
 admin.site.register(models.Politician, PoliticianAdmin)
 admin.site.register(models.Category,   CategoryAdmin)

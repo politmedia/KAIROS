@@ -55,7 +55,7 @@ class PoliticianForm(forms.ModelForm):
 class PartyPoliticianForm(forms.ModelForm):
     class Meta:
         model = Politician
-        fields = ['first_name', 'last_name', 'email', 'state', 'user']
+        fields = ['first_name', 'last_name', 'email', 'user']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')

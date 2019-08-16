@@ -314,10 +314,6 @@ msgstr "Suchen"
 msgid "filter_by_party"
 msgstr "Auf Partei einschränken"
 
-#: core/templates/core/candidates/filter.html:38
-msgid "filter_by_state"
-msgstr "Auf Kanton einschränken"
-
 #: core/templates/core/candidates/filter.html:52
 msgid "sort_by_category"
 msgstr "Nach Kategorie sortieren"
@@ -715,3 +711,6 @@ msgstr "Wahlkreis"
 
 msgid "constituencies"
 msgstr "Wahlkreise"
+
+msgid "filter_by_constituency"
+msgstr "Auf Wahlkreis einschränken"

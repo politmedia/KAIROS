@@ -127,8 +127,8 @@ Vue.component('candidate-list-item', {
             <br class="visible-xs">
             <a :href="candidate.profile_link">
               {{ candidate.first_name }} {{ candidate.last_name }}
-              <span v-if="candidate.party_short !== '-' || candidate.state_name !== '-'">
-                (<span v-if="candidate.party_short !== '-'">{{candidate.party_short}}</span><span v-if="candidate.party_short !== '-' && candidate.state_name !== '-'">, </span><span v-if="candidate.state_name !== '-'">{{candidate.state_name}}</span>)
+              <span v-if="candidate.party_short !== '-'">
+                (<span v-if="candidate.party_short !== '-'">{{candidate.party_short}}</span>)
               </span>
             </a>
           </div>
@@ -316,12 +316,13 @@ new Vue({
       '/api/v2/politicians/?' +
         new URLSearchParams(
           cleanParams({
-            state: parseInt(currentUrl.searchParams.get('state')),
             category: parseInt(currentUrl.searchParams.get('category')),
             search: currentUrl.searchParams.get('search'),
             evaluate: parseInt(currentUrl.searchParams.get('evaluate')),
             party: parseInt(currentUrl.searchParams.get('party')),
-            candidacy__mandate_id: parseInt(currentUrl.searchParams.get('mandate'))
+            candidacy__mandate_id: parseInt(currentUrl.searchParams.get('mandate')),
+            candidacy__constituency_id: parseInt(currentUrl.searchParams.get('constituency')),
+            candidacy__is_new: parseInt(currentUrl.searchParams.get('is_new'))
           })
         ).toString(),
       {
