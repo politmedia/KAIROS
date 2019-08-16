@@ -24,6 +24,10 @@ class Language(models.Model):
     def __str__(self):
         return self.iso_code
 
+    class Meta:
+        verbose_name        = _('language')
+        verbose_name_plural = _('languages')
+
 
 class Constituency(models.Model):
     name                    = models.CharField(
