@@ -1,4 +1,4 @@
-from core.models import Politician, Question, Statistic, Answer, Category, Candidacy, Mandate
+from core.models import Politician, Question, Statistic, Answer, Category, Candidacy, Mandate, Constituency
 from django.http import JsonResponse
 from django.utils.encoding import force_text
 from django.core.serializers.json import DjangoJSONEncoder
@@ -37,6 +37,15 @@ def v1(request):
         }
         for x
         in Mandate.objects.all().order_by('id')
+    ]
+
+    constituencies = [
+        {
+            'id': x.id,
+            'name': x.name
+        }
+        for x
+        in Constituency.objects.all().order_by('id')
     ]
 
     politicians = []
@@ -84,7 +93,7 @@ def v1(request):
 
             politicians.append(p)
 
-    return JsonResponse({ 'politicians': politicians, 'questions': questions, 'categories': categories, 'mandates': mandates })
+    return JsonResponse({ 'politicians': politicians, 'questions': questions, 'categories': categories, 'mandates': mandates, 'constituencies': constituencies })
 
 
 class PoliticianViewSet(ReadOnlyModelViewSet):
