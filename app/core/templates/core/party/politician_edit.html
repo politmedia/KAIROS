@@ -20,10 +20,6 @@
                     {{ form.email|label_with_class:'control-label' }}
                     {{ form.email }}
                 </div>
-                <div class="form-group {% if form.state.errors %}has-error{% endif %}">
-                    {{ form.state|label_with_class:'control-label' }}
-                    {{ form.state }}
-                </div>
             </div>
         </div>
         <input class="btn btn-primary" type="submit" value="{% trans 'save' %}">

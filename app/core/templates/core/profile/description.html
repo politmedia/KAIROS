@@ -16,35 +16,26 @@
             </div>
         </div>
     </div>
-    <div class="col-md-5 col-lg-5 details">
+    <div class="col-md-4 col-lg-4 details">
         <h2 class="mt0">{{ politician.first_name }} {{ politician.last_name }}</h2>
 
-        <div class="row">
-            {% if politician.state.count > 1 %}
-            <div class="col-md-12">
-                <strong>{% trans 'states' %}:</strong>
-                <a href="#" data-toggle="popover" data-placement="auto"
-                   title="{% trans 'states' %}"
-                    data-content="{% for state in politician.state.all %}{{state.name}}, {% endfor %}">
-                    {{politician.state_name}}
-                </a>
-            </div>
-            {% else %}
-                <div class="col-md-12"><strong>{% trans 'state' %}:</strong> {{politician.state_name}}</div>
-            {% endif %}
-        </div>
-
+        {% if politician.party %}
         <div class="row">
             <div class="col-md-12"><strong>{% trans 'party' %}:</strong> {% if politician.party %}{% party_tag politician.party %}{%else%}{{politician.party_other}}{% endif %}</div>
         </div>
+        {% endif %}
 
+        {% if politician.past_contributions %}
         <div class="row">
             <div class="col-md-12"><strong>{% trans 'past_contributions' %}:</strong> {{politician.past_contributions}}</div>
         </div>
+        {% endif %}
 
+        {% if politician.future_plans %}
         <div class="row">
             <div class="col-md-12"><strong>{% trans 'future_plans' %}:</strong> {{politician.future_plans}}</div>
         </div>
+        {% endif %}
 
         <div class="row">
             <div class="col-md-12">
@@ -66,7 +57,7 @@
             </div>
             <div class="col-md-12">
                 {% for candidacy in candidacies %}
-                    <p>{{ candidacy.mandate }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %})</p>
+                    <p>{{ candidacy.mandate }} {% trans 'in' %} {{ candidacy.constituency }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %})</p>
                 {% endfor %}
             </div>
         </div>
@@ -89,7 +80,7 @@
         </div>
         {% endif %}
     </div>
-    <div class="col-md-4 col-lg-4">
+    <div class="col-md-5 col-lg-5">
         <div
             class="spider-container"
             id="chart"

@@ -12,8 +12,9 @@ class CandidacySerializer(serializers.ModelSerializer):
         model = models.Candidacy
         fields = (
             'id',
+            'is_new',
             'mandate_id',
-            'is_new'
+            'constituency_id'
         )
 
 
@@ -70,7 +71,6 @@ class PoliticianSerializer(serializers.ModelSerializer):
             'last_name',
             'party_name',
             'party_short',
-            'state_name',
             'future_plans',
             'past_contributions',
             'image',

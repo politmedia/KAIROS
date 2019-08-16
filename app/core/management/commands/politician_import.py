@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from core.models import Politician, State, Party
+from core.models import Politician, Party
 from django.db import transaction
 from django.utils import translation
 import json
@@ -31,8 +31,6 @@ class Command(BaseCommand):
                         )
 
                         politician.save()
-
-                        politician.state.add(*State.objects.filter(name__in=row.get('states')))
                     except Exception:
                         print('Skipping politician row:\n-----')
                         print(row)

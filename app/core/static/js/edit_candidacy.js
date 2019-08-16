@@ -1,9 +1,16 @@
 jQuery(function ($){
   "use strict";
 
-  $('select.answer').on('change', function(e) {
+  $('select').on('change', function(e) {
     e.preventDefault()
-     var form = $(e.target).closest('form')
-     form.submit()
+
+    if($(this).attr('id') == null) {
+		var form = $(e.target).closest('form')
+    }
+    else {
+    	var form = $("#" + $(this).attr('id'));
+    }
+
+	form.submit()
   })
 });

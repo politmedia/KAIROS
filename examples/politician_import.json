@@ -5,10 +5,6 @@
         "last_name": "Smith",
         "email": "john.smith@example.com",
         "party": "Democrats",
-        "user": "admin",
-        "states": [
-            "New York",
-            "New Hampshire"
-        ]
+        "user": "admin"
     }
 ]

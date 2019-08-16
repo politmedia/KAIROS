@@ -15,25 +15,18 @@ def generate_url():
     return key
 
 
-class State(models.Model):
+class Constituency(models.Model):
     name                    = models.CharField(
         max_length          = 50,
         verbose_name        = _('name')
     )
-    sort                    = models.PositiveIntegerField(
-        default             = 0,
-        verbose_name        = _('sort')
-    )
-
-
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name        = _('state')
-        verbose_name_plural = _('states')
-        ordering            = ['name']
+        verbose_name        = _('constituency')
+        verbose_name_plural = _('constituencies')
 
 
 class Party(models.Model):
@@ -82,6 +75,10 @@ class Mandate(models.Model):
         max_length          = 50,
         verbose_name        = _('name')
     )
+    constituency            = models.ManyToManyField(
+        Constituency,
+        verbose_name        = _('constituency')
+    )
 
     def __str__(self):
         return self.name
@@ -92,7 +89,7 @@ class Mandate(models.Model):
 
 
 class Candidacy(models.Model):
-    mandate                  = models.ForeignKey(
+    mandate                 = models.ForeignKey(
         Mandate,
         verbose_name        = _('mandate')
     )
@@ -100,6 +97,17 @@ class Candidacy(models.Model):
         default             = True,
         verbose_name        = _('is_new')
     )
+    constituency            = models.ForeignKey(
+        Constituency,
+        verbose_name        = _('constituency'),
+        null                = True
+    )
+
+    def __str__(self):
+        if self.mandate.name is not None and self.constituency.name is not None:
+            return u'%s, %s' % (self.mandate.name, self.constituency.name)
+        elif self.mandate.name is not None:
+            return self.mandate.name
 
     class Meta:
         verbose_name        = _('candidacy')
@@ -147,11 +155,6 @@ class Politician(models.Model):
         verbose_name        = _('unique_key'),
         default             = generate_url
     )
-    state                   = models.ManyToManyField(
-        State,
-        blank               = True,
-        verbose_name        = _('state')
-    )
     party                   = models.ForeignKey(
         Party,
         null                = True,
@@ -197,25 +200,6 @@ class Politician(models.Model):
         else:
             return '-'
 
-    @property
-    def state_name(self):
-        state_count = self.state.count()
-        if state_count > 1:
-            return _('%s states') % state_count
-        elif state_count == 1:
-            return self.state.first().name
-        else:
-            return '-'
-
-    def get_details(self):
-        if not self.party and not self.state:
-            return ''
-        elif self.party and not self.state:
-            return '(%s)' % self.party_short
-        elif not self.party and self.state:
-            return '(%s)' % self.state_name
-        else:
-            return '(%s, %s)' % (self.state_name, self.party_short)
 
     @property
     def unique_url(self):

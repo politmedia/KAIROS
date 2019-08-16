@@ -34,15 +34,15 @@
                     </select>
                 </div>
                 <div class="col-md-5ths col-lg-2">
-                    <select name="state" class="form-control">
-                        <option value="">{% trans 'filter_by_state' %}...</option>
+                    <select name="constituency" class="form-control">
+                        <option value="">{% trans 'filter_by_constituency' %}...</option>
                         <option disabled>─────────────────</option>
-                        {% for state in states %}
+                        {% for constituency in constituencies %}
                             <option
-                            value="{{ state.id }}"
-                            {% if request.GET.state == state.id|slugify %}selected{% endif %}
+                            value="{{ constituency.id }}"
+                            {% if request.GET.constituency == constituency.id|slugify %}selected{% endif %}
                             >
-                                {{state.name}}
+                                {{constituency.name}}
                             </option>
                         {% endfor %}
                     </select>
@@ -62,10 +62,10 @@
                     </select>
                 </div>
                 <div class="col-md-5ths col-lg-2">
-                    <select name="is_member" class="form-control">
+                    <select name="is_new" class="form-control">
                         <option value="">{% trans 'All candidates' %}</option>
-                        <option value="1" {% if request.GET.is_member == '1' %}selected{% endif %}>{% trans 'Only current members of parliament' %}</option>
-                        <option value="0" {% if request.GET.is_member == '0' %}selected{% endif %}>{% trans 'Only new candidates' %}</option>
+                        <option value="1" {% if request.GET.is_new == '1' %}selected{% endif %}>{% trans 'Only current members of parliament' %}</option>
+                        <option value="0" {% if request.GET.is_new == '0' %}selected{% endif %}>{% trans 'Only new candidates' %}</option>
                     </select>
                 </div>
                 <div class="col-md-5ths col-lg-2">
