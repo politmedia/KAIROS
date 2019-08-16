@@ -15,6 +15,16 @@ def generate_url():
     return key
 
 
+class Language(models.Model):
+    iso_code                = models.CharField(
+        max_length          = 2,
+        verbose_name        = _('iso_code')
+    )
+
+    def __str__(self):
+        return self.iso_code
+
+
 class Constituency(models.Model):
     name                    = models.CharField(
         max_length          = 50,
@@ -171,6 +181,12 @@ class Politician(models.Model):
         Candidacy,
         blank               = True,
         verbose_name        = _('candidacy')
+    )
+    language                = models.ForeignKey(
+        Language,
+        null                = True,
+        blank               = True,
+        verbose_name        = _('language')
     )
 
     def __str__(self):

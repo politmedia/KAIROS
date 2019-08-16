@@ -1,5 +1,5 @@
 from django import forms
-from core.models import Politician, Party
+from core.models import Politician, Party, Language
 from core.widgets import ImagePreviewFileInput
 from django.utils.translation import ugettext_lazy as _
 
@@ -55,7 +55,7 @@ class PoliticianForm(forms.ModelForm):
 class PartyPoliticianForm(forms.ModelForm):
     class Meta:
         model = Politician
-        fields = ['first_name', 'last_name', 'email', 'user']
+        fields = ['first_name', 'last_name', 'email', 'user', 'language']
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('label_suffix', '')
@@ -63,7 +63,8 @@ class PartyPoliticianForm(forms.ModelForm):
         for field_name, field in self.fields.items():
             if isinstance(field.widget, forms.TextInput) or isinstance(field.widget, forms.Select) or isinstance(field.widget, forms.EmailInput):
                 field.widget.attrs.update({
-                    'class': 'form-control'
+                    'class': 'form-control',
+                    'required': True
                 })
 
 
@@ -71,6 +72,8 @@ class RegistrationForm(forms.Form):
     first_name = forms.CharField(label=_('first_name'), max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
     last_name = forms.CharField(label=_('last_name'), max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
     email = forms.EmailField(label=_('email'), widget=forms.EmailInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+    languages = Language.objects.all()
+    language = forms.ChoiceField(label=_('language', widget=forms.Select(choices=languages,attrs={'class': 'form-control', 'required': True, 'autofocus': True})))
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)

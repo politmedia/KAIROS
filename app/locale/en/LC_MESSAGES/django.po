@@ -738,3 +738,9 @@ msgstr "Constituencies"
 
 msgid "filter_by_constituency"
 msgstr "Filter by constituency"
+
+msgid "language"
+msgstr "Language"
+
+msgid "languages"
+msgstr "Languages"

@@ -64,6 +64,10 @@ class ConstituencyAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ['iso_code']
+
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(models.Party,      PartyAdmin)
@@ -72,3 +76,4 @@ admin.site.register(models.Category,   CategoryAdmin)
 admin.site.register(models.Question,   QuestionAdmin)
 admin.site.register(models.Mandate,    MandateAdmin)
 admin.site.register(models.Constituency, ConstituencyAdmin)
+admin.site.register(models.Language,   LanguageAdmin)

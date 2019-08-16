@@ -26,13 +26,14 @@ $.fn.insertAtCaret = function (text) {
 };
 
 $(document).ready(function(){
-	$(".insert_placeholder_subject").click(function(event){
+	$(".insert_placeholder_subject, .insert_placeholder_message").click(function(event){
+        var filler = $(this).attr("class").replace("insert_placeholder_","")
 		event.preventDefault();
-		$("#subject").insertAtCaret($(this).attr('title') + ' ');
+		$(this).closest('div.form-group').find('[name*="' + filler + '"]').insertAtCaret($(this).attr('title') + ' ');
 	});
 
-	$(".insert_placeholder_message").click(function(event){
-		event.preventDefault();
-		$("#message").insertAtCaret($(this).attr('title') + ' ');
-	});
+    $('#languageTabs a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
 });

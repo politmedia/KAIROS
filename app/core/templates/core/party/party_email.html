@@ -4,30 +4,60 @@
 
 {% block 'subcontent' %}
 <h2>{% trans 'email' %}</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="recipients">{% trans 'recipients' %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="recipients">{% trans 'recipients' %}
                     <select name="recipients" id="recipients" required="true" class="form-control">
                         <option value="all">{% trans 'all' %}</option>
                         <option value="questionaire_done">{% trans 'questionaire_done' %}</option>
                         <option value="questionaire_open">{% trans 'questionaire_open' %}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="subject">{% trans 'subject' %}</label>
-                    <input type="text" name="subject" id="subject" required="true" class="form-control">
-                    <strong>{% trans 'placeholder' %}: <a href="#" class="insert_placeholder_subject" title="$(first_name)">{% trans 'first_name' %}</a> <a href="#" class="insert_placeholder_subject" title="$(last_name)">{% trans 'last_name' %}</a></strong>
-                </div>
-                <div class="form-group">
-                    <label for="message">{% trans 'message' %}</label>
-                    <textarea rows="5" name="message" id="message" required="true" class="form-control"></textarea>
-                    <strong>{% trans 'placeholder' %}: <a href="#" class="insert_placeholder_message" title="$(first_name)">{% trans 'first_name' %}</a> <a href="#" class="insert_placeholder_message" title="$(last_name)">{% trans 'last_name' %}</a> <a href="#" class="insert_placeholder_message" title="$(url)">{% trans 'unique_url' %}</a></strong>
+                <ul class="nav nav-tabs" id="languageTabs">
+                    {% if languages %}
+                        {% for language in languages %}
+                            <li role="presentation"{% if forloop.first %} class="active"{% endif %}><a href="#{{ language }}">{{ language|upper }}</a></li>
+                        {% endfor %}
+                    {% else %}
+                        <li role="presentation" class="active"><a href="#default">{% trans 'default' %}</a></li>
+                    {% endif %}
+                </ul>
+                <div class="tab-content mtm">
+                    {% if languages %}
+                        {% for language in languages %}
+                            <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ language }}">
+                                <div class="form-group">
+                                    <label for="subject">{% trans 'subject' %} ({{ language|upper }})</label>
+                                    <input type="text" name="subject_{{ language }}" id="subject_{{ language }}" required="true" class="form-control">
+                                    <strong>{% trans 'placeholder' %}: <a href="#" class="insert_placeholder_subject" title="$(first_name)">{% trans 'first_name' %}</a> <a href="#" class="insert_placeholder_subject" title="$(last_name)">{% trans 'last_name' %}</a></strong>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">{% trans 'message' %} ({{ language|upper }})</label>
+                                    <textarea rows="5" name="message_{{ language }}" id="message_{{ language }}" required="true" class="form-control"></textarea>
+                                    <strong>{% trans 'placeholder' %}: <a href="#" class="insert_placeholder_message" title="$(first_name)">{% trans 'first_name' %}</a> <a href="#" class="insert_placeholder_message" title="$(last_name)">{% trans 'last_name' %}</a> <a href="#" class="insert_placeholder_message" title="$(url)">{% trans 'unique_url' %}</a></strong>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div role="tabpanel" class="tab-pane active" id="default">
+                            <div class="form-group">
+                                <label for="subject">{% trans 'subject' %}</label>
+                                <input type="text" name="subject" id="subject" required="true" class="form-control">
+                                <strong>{% trans 'placeholder' %}: <a href="#" class="insert_placeholder_subject" title="$(first_name)">{% trans 'first_name' %}</a> <a href="#" class="insert_placeholder_subject" title="$(last_name)">{% trans 'last_name' %}</a></strong>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">{% trans 'message' %}</label>
+                                <textarea rows="5" name="message" id="message" required="true" class="form-control"></textarea>
+                                <strong>{% trans 'placeholder' %}: <a href="#" class="insert_placeholder_message" title="$(first_name)">{% trans 'first_name' %}</a> <a href="#" class="insert_placeholder_message" title="$(last_name)">{% trans 'last_name' %}</a> <a href="#" class="insert_placeholder_message" title="$(url)">{% trans 'unique_url' %}</a></strong>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
         <input class="btn btn-primary" type="submit" value="{% trans 'send' %}">
     </form>
-{% endblock %}
+    {% endblock %}
