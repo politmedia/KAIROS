@@ -1,6 +1,6 @@
 from core.decorators import require_party_login
 from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
-from core.models import Politician, Question, Answer, Candidacy, Mandate, Constituency
+from core.models import Politician, Question, Answer, Candidacy, Mandate, Constituency, Language
 from core.models import Statistic, Category, Link, Party
 from core.tools import set_cookie, get_cookie, send_mail_to_politician
 from django.conf import settings
@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.db.models import Q, Sum
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -756,13 +757,22 @@ def party_upload_csv(request, party_name):
             try:
                 fields = line.split(",")
                 email = fields[2].strip()
+                lang = fields[3].strip()
+                language = Language.objects.filter(iso_code=lang)
 
                 if Politician.objects.filter(email=email).count() is 0:
+                    if language.count() is 0:
+                        language = Language(iso_code=lang)
+                        language.save()
+                    else:
+                        language = language.first()
+
                     politician = Politician.objects.create(
                         first_name = fields[0],
                         last_name = fields[1],
                         email = email,
-                        user_id = request.user.id
+                        user_id = request.user.id,
+                        language = language
                     )
 
                     politician.save()
@@ -787,16 +797,27 @@ def party_upload_csv(request, party_name):
 
 @require_party_login
 def party_email_view(request, party_name):
+    languages = Language.objects.all()
     if request.method == 'GET':
         return render(
             request,
-            'core/party/party_email.html'
+            'core/party/party_email.html',
+            {
+                'languages': languages
+            }
         )
     else:
         recipients_sel = request.POST.get('recipients', None)
         recipients = []
-        subject = request.POST.get('subject', None)
-        message = request.POST.get('message', None)
+        subjects = {}
+        bodies = {}
+        for language in languages:
+            subjects.update({language: request.POST.get('subject_' + str(language), None)})
+            bodies.update({language: request.POST.get('message_' + str(language), None)})
+        else:
+            subjects.update({'default': request.POST.get('subject', None)})
+            bodies.update({'default': request.POST.get('message', None)})
+
         questions_count = Question.objects.all().count()
         politicians = Politician.objects.filter().exclude(email='')
 
@@ -814,15 +835,26 @@ def party_email_view(request, party_name):
 
         if len(recipients) is not 0:
             for recipient in recipients:
-                send_mail(
-                    subject.replace('$(first_name)', recipient.first_name).
-                            replace('$(last_name)', recipient.last_name),
-                    message.replace('$(first_name)', recipient.first_name).
-                            replace('$(last_name)', recipient.last_name).
-                            replace('$(url)', recipient.unique_url),
-                    settings.DEFAULT_FROM_EMAIL,
-                    [recipient.email],
-                    fail_silently=False)
+                if len(languages) > 0:
+                    send_mail(
+                        subjects[recipient.language].replace('$(first_name)', recipient.first_name).
+                                replace('$(last_name)', recipient.last_name),
+                        bodies[recipient.language].replace('$(first_name)', recipient.first_name).
+                                replace('$(last_name)', recipient.last_name).
+                                replace('$(url)', recipient.unique_url),
+                        settings.DEFAULT_FROM_EMAIL,
+                        [recipient.email],
+                        fail_silently=False)
+                else:
+                    send_mail(
+                        subjects['default'].replace('$(first_name)', recipient.first_name).
+                                replace('$(last_name)', recipient.last_name),
+                        bodies['default'].replace('$(first_name)', recipient.first_name).
+                                replace('$(last_name)', recipient.last_name).
+                                replace('$(url)', recipient.unique_url),
+                        settings.DEFAULT_FROM_EMAIL,
+                        [recipient.email],
+                        fail_silently=False)
 
             messages.success(
             request, _('politician_email_sent_successfull') % (
@@ -856,7 +888,8 @@ class PoliticianRegistrationView(FormView):
             first_name=form.data['first_name'],
             last_name=form.data['last_name'],
             email=form.data['email'],
-            user_id=user.id
+            user_id=user.id,
+            language_id=form.data['language']
         )
 
         send_mail_to_politician(request, politician)

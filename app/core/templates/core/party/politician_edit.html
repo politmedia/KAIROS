@@ -20,6 +20,10 @@
                     {{ form.email|label_with_class:'control-label' }}
                     {{ form.email }}
                 </div>
+                <div class="form-group {% if form.email.errors %}has-error{% endif %}">
+                    {{ form.language|label_with_class:'control-label' }}
+                    {{ form.language }}
+                </div>
             </div>
         </div>
         <input class="btn btn-primary" type="submit" value="{% trans 'save' %}">

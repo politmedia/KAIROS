@@ -714,3 +714,9 @@ msgstr "Wahlkreise"
 
 msgid "filter_by_constituency"
 msgstr "Auf Wahlkreis einschränken"
+
+msgid "language"
+msgstr "Sprache"
+
+msgid "languages"
+msgstr "Sprachen"
