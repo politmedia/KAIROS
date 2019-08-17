@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from functools import wraps
 
+
 def require_party_login(fn):
 
     @wraps(fn)

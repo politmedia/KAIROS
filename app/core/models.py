@@ -1,13 +1,14 @@
-from django.contrib.auth.models import User
-from django.db import models
-from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
-from django.conf import settings
-from django.dispatch import receiver
-from django.db.models.signals import post_save
-from colorfield.fields import ColorField
 import base64
 import os
+
+from colorfield.fields import ColorField
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.translation import ugettext_lazy as _
 
 
 def generate_url():
@@ -16,105 +17,105 @@ def generate_url():
 
 
 class Language(models.Model):
-    iso_code                = models.CharField(
-        max_length          = 2,
-        verbose_name        = _('iso_code')
+    iso_code = models.CharField(
+        max_length=2,
+        verbose_name=_('iso_code')
     )
 
     def __str__(self):
         return self.iso_code
 
     class Meta:
-        verbose_name        = _('language')
+        verbose_name = _('language')
         verbose_name_plural = _('languages')
 
 
 class Constituency(models.Model):
-    name                    = models.CharField(
-        max_length          = 50,
-        verbose_name        = _('name')
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_('name')
     )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name        = _('constituency')
+        verbose_name = _('constituency')
         verbose_name_plural = _('constituencies')
 
 
 class Party(models.Model):
-    name                    = models.CharField(
-        max_length          = 50,
-        verbose_name        = _('name')
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_('name')
     )
-    shortname               = models.CharField(
-        max_length          = 10,
-        verbose_name        = _('shortname')
+    shortname = models.CharField(
+        max_length=10,
+        verbose_name=_('shortname')
     )
-    background_color        = ColorField(
-        default             = '#3F51B5',
-        verbose_name        = _('background_color')
+    background_color = ColorField(
+        default='#3F51B5',
+        verbose_name=_('background_color')
     )
-    font_color              = ColorField(
-        default             = '#FFFFFF',
-        verbose_name        = _('font_color')
+    font_color = ColorField(
+        default='#FFFFFF',
+        verbose_name=_('font_color')
     )
 
     def __str__(self):
         return self.shortname
 
     class Meta:
-        verbose_name        = _('party')
+        verbose_name = _('party')
         verbose_name_plural = _('parties')
-        ordering            = ['name']
+        ordering = ['name']
 
 
 class Category(models.Model):
-    name                    = models.CharField(
-        max_length          = 50,
-        verbose_name        = _('name')
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_('name')
     )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name        = _('category')
+        verbose_name = _('category')
         verbose_name_plural = _('categories')
 
 
 class Mandate(models.Model):
-    name                    = models.CharField(
-        max_length          = 50,
-        verbose_name        = _('name')
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_('name')
     )
-    constituency            = models.ManyToManyField(
+    constituency = models.ManyToManyField(
         Constituency,
-        verbose_name        = _('constituency')
+        verbose_name=_('constituency')
     )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name        = _('mandate')
+        verbose_name = _('mandate')
         verbose_name_plural = _('mandates')
 
 
 class Candidacy(models.Model):
-    mandate                 = models.ForeignKey(
+    mandate = models.ForeignKey(
         Mandate,
-        verbose_name        = _('mandate')
+        verbose_name=_('mandate')
     )
-    is_new                  = models.BooleanField(
-        default             = True,
-        verbose_name        = _('is_new')
+    is_new = models.BooleanField(
+        default=True,
+        verbose_name=_('is_new')
     )
-    constituency            = models.ForeignKey(
+    constituency = models.ForeignKey(
         Constituency,
-        verbose_name        = _('constituency'),
-        null                = True
+        verbose_name=_('constituency'),
+        null=True
     )
 
     def __str__(self):
@@ -124,73 +125,73 @@ class Candidacy(models.Model):
             return self.mandate.name
 
     class Meta:
-        verbose_name        = _('candidacy')
+        verbose_name = _('candidacy')
         verbose_name_plural = _('candidacies')
 
 
 class Politician(models.Model):
-    user                    = models.ForeignKey(
+    user = models.ForeignKey(
         User,
-        verbose_name        = _('user')
+        verbose_name=_('user')
     )
-    first_name              = models.CharField(
-        max_length          = 100,
-        blank               = True,
-        null                = True,
-        verbose_name        = _('first_name')
+    first_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        verbose_name=_('first_name')
     )
-    last_name               = models.CharField(
-        max_length          = 100,
-        blank               = True,
-        null                = True,
-        verbose_name        = _('last_name')
+    last_name = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True,
+        verbose_name=_('last_name')
     )
-    email                   = models.EmailField(
-        blank               = True,
-        null                = True,
-        verbose_name        = _('email')
+    email = models.EmailField(
+        blank=True,
+        null=True,
+        verbose_name=_('email')
     )
-    image                   = models.ImageField(
-        upload_to           = 'politicians/',
-        null                = True,
-        blank               = True,
-        verbose_name        = _('image')
+    image = models.ImageField(
+        upload_to='politicians/',
+        null=True,
+        blank=True,
+        verbose_name=_('image')
     )
-    past_contributions      = models.TextField(
-        blank               = True,
-        verbose_name        = _('past_contributions')
+    past_contributions = models.TextField(
+        blank=True,
+        verbose_name=_('past_contributions')
     )
-    future_plans            = models.TextField(
-        blank               = True,
-        verbose_name        = _('future_plans')
+    future_plans = models.TextField(
+        blank=True,
+        verbose_name=_('future_plans')
     )
-    unique_key              = models.CharField(
-        max_length          = 20,
-        verbose_name        = _('unique_key'),
-        default             = generate_url
+    unique_key = models.CharField(
+        max_length=20,
+        verbose_name=_('unique_key'),
+        default=generate_url
     )
-    party                   = models.ForeignKey(
+    party = models.ForeignKey(
         Party,
-        null                = True,
-        blank               = True,
-        verbose_name        = _('party')
+        null=True,
+        blank=True,
+        verbose_name=_('party')
     )
-    party_other             = models.CharField(
-        max_length          = 50,
-        null                = True,
-        blank               = True,
-        verbose_name        = _('party_other')
+    party_other = models.CharField(
+        max_length=50,
+        null=True,
+        blank=True,
+        verbose_name=_('party_other')
     )
-    candidacy               = models.ManyToManyField(
+    candidacy = models.ManyToManyField(
         Candidacy,
-        blank               = True,
-        verbose_name        = _('candidacy')
+        blank=True,
+        verbose_name=_('candidacy')
     )
-    language                = models.ForeignKey(
+    language = models.ForeignKey(
         Language,
-        null                = True,
-        blank               = True,
-        verbose_name        = _('language')
+        null=True,
+        blank=True,
+        verbose_name=_('language')
     )
 
     def __str__(self):
@@ -199,7 +200,8 @@ class Politician(models.Model):
     @classmethod
     def get_politicians_by_category(cls, category_id, input_value, order='-accordance'):
         return cls.objects.filter(statistic__category_id=category_id).extra(
-            select={'accordance':'core_statistic_compare(value::integer, %d::integer)' % input_value}
+            select={
+                'accordance': 'core_statistic_compare(value::integer, %d::integer)' % input_value}
         ).order_by(order)
 
     @property
@@ -220,7 +222,6 @@ class Politician(models.Model):
         else:
             return '-'
 
-
     @property
     def unique_url(self):
         return '%s%s' % (
@@ -229,91 +230,91 @@ class Politician(models.Model):
         )
 
     class Meta:
-        verbose_name        = _('politician')
+        verbose_name = _('politician')
         verbose_name_plural = _('politicians')
 
 
 class Link(models.Model):
-    politician              = models.ForeignKey(
+    politician = models.ForeignKey(
         Politician,
-        verbose_name        = _('politician'),
-        related_name        = 'links'
+        verbose_name=_('politician'),
+        related_name='links'
     )
-    url                     = models.URLField(
-        verbose_name        = _('url')
+    url = models.URLField(
+        verbose_name=_('url')
     )
 
     class Meta:
-        verbose_name        = _('link')
+        verbose_name = _('link')
         verbose_name_plural = _('links')
 
 
 class Question(models.Model):
-    preferred_answer        = models.IntegerField(
-        verbose_name        = _('preferred_answer')
+    preferred_answer = models.IntegerField(
+        verbose_name=_('preferred_answer')
     )
-    question_number         = models.IntegerField(
-        verbose_name        = _('question_number')
+    question_number = models.IntegerField(
+        verbose_name=_('question_number')
     )
-    category                = models.ForeignKey(
+    category = models.ForeignKey(
         Category,
-        verbose_name        = _('category')
+        verbose_name=_('category')
     )
-    text                    = models.TextField(
-        verbose_name        = _('text')
+    text = models.TextField(
+        verbose_name=_('text')
     )
-    description             = models.TextField(
-        null                = True,
-        blank               = True,
-        verbose_name        = _('description')
+    description = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('description')
     )
 
     class Meta:
-        verbose_name        = _('question')
+        verbose_name = _('question')
         verbose_name_plural = _('questions')
-        ordering            = ['category__name']
+        ordering = ['category__name']
 
 
 class Answer(models.Model):
-    question                = models.ForeignKey(
+    question = models.ForeignKey(
         Question,
-        verbose_name        = _('question')
+        verbose_name=_('question')
     )
-    politician              = models.ForeignKey(
+    politician = models.ForeignKey(
         Politician,
-        verbose_name        = _('politician'),
-        related_name        = 'answers'
+        verbose_name=_('politician'),
+        related_name='answers'
     )
-    agreement_level         = models.IntegerField(
-        verbose_name        = _('agreement_level')
+    agreement_level = models.IntegerField(
+        verbose_name=_('agreement_level')
     )
-    note                    = models.TextField(
-        verbose_name        = _('note')
+    note = models.TextField(
+        verbose_name=_('note')
     )
 
     class Meta:
-        verbose_name        = _('answer')
+        verbose_name = _('answer')
         verbose_name_plural = _('answers')
 
 
 class Statistic(models.Model):
-    politician              = models.ForeignKey(
+    politician = models.ForeignKey(
         Politician,
-        verbose_name        = _('politician')
+        verbose_name=_('politician')
     )
-    category                = models.ForeignKey(
+    category = models.ForeignKey(
         Category,
-        verbose_name        = _('category')
+        verbose_name=_('category')
     )
-    value                   = models.IntegerField(
-        verbose_name        = _('value')
+    value = models.IntegerField(
+        verbose_name=_('value')
     )
 
     @classmethod
     def get_accordance(cls, politician_id, category_id, input_value):
         statistic = cls.objects.filter(politician_id=politician_id, category_id=category_id).extra(
             select={
-                'accordance' : 'core_statistic_compare(value::integer, %d::integer)' % input_value
+                'accordance': 'core_statistic_compare(value::integer, %d::integer)' % input_value
             }
         ).first()
 
@@ -338,20 +339,21 @@ class Statistic(models.Model):
         ''', [politician_id])
 
     class Meta:
-        verbose_name        = _('statistic')
+        verbose_name = _('statistic')
         verbose_name_plural = _('statistics')
 
 # Model to extend the django user model and add a unique key to every user
 
+
 class RegistrationKey(models.Model):
-    user                    = models.OneToOneField(
+    user = models.OneToOneField(
         User,
-        on_delete           = models.CASCADE
+        on_delete=models.CASCADE
     )
-    unique_key              = models.CharField(
-        max_length          = 20,
-        verbose_name        = _('unique_key'),
-        default             = generate_url
+    unique_key = models.CharField(
+        max_length=20,
+        verbose_name=_('unique_key'),
+        default=generate_url
     )
 
 

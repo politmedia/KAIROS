@@ -1,10 +1,10 @@
 import json
 
-from rest_framework import serializers
 from core import models
-from easy_thumbnails.files import get_thumbnailer
 from core.views import politician_statistic_view
 from django.core.urlresolvers import reverse
+from easy_thumbnails.files import get_thumbnailer
+from rest_framework import serializers
 
 
 class CandidacySerializer(serializers.ModelSerializer):
@@ -26,16 +26,18 @@ class PoliticianSerializer(serializers.ModelSerializer):
 
     def get_thumbnail(self, instance):
         return (
-            self.context['request'].build_absolute_uri(get_thumbnailer(instance.image)['large'].url)
+            self.context['request'].build_absolute_uri(
+                get_thumbnailer(instance.image)['large'].url)
             if instance.image
             else None
         )
 
     def get_profile_link(self, instance):
-        return self.context['request'].build_absolute_uri(reverse('politician', kwargs={'politician_id':instance.id}))
+        return self.context['request'].build_absolute_uri(reverse('politician', kwargs={'politician_id': instance.id}))
 
     def get_statistic(self, instance):
-        res = politician_statistic_view(self.context['request'], instance.id).content
+        res = politician_statistic_view(
+            self.context['request'], instance.id).content
 
         result = json.loads(res.decode('utf-8'))
 

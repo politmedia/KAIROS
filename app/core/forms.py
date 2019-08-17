@@ -1,6 +1,8 @@
-from django import forms
-from core.models import Politician, Party, Language
+from core.models import Language
+from core.models import Party
+from core.models import Politician
 from core.widgets import ImagePreviewFileInput
+from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -16,7 +18,7 @@ class PoliticianForm(forms.ModelForm):
         image = self.cleaned_data.get('image')
 
         if image:
-            if image.size > 5*1024*1024:
+            if image.size > 5 * 1024 * 1024:
                 raise forms.ValidationError('Image file too large ( > 5MB )')
 
         return image
@@ -69,11 +71,15 @@ class PartyPoliticianForm(forms.ModelForm):
 
 
 class RegistrationForm(forms.Form):
-    first_name = forms.CharField(label=_('first_name'), max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
-    last_name = forms.CharField(label=_('last_name'), max_length=30, widget=forms.TextInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
-    email = forms.EmailField(label=_('email'), widget=forms.EmailInput(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+    first_name = forms.CharField(label=_('first_name'), max_length=30, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+    last_name = forms.CharField(label=_('last_name'), max_length=30, widget=forms.TextInput(
+        attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+    email = forms.EmailField(label=_('email'), widget=forms.EmailInput(
+        attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
     choices = Language.objects.all()
-    language = forms.ModelChoiceField(label=_('language'),queryset=choices, widget=forms.Select(attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+    language = forms.ModelChoiceField(label=_('language'), queryset=choices, widget=forms.Select(
+        attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
