@@ -1,31 +1,49 @@
 from core.decorators import require_party_login
-from core.forms import PoliticianForm, PartyPoliticianForm, RegistrationForm
-from core.models import Politician, Question, Answer, Candidacy, Mandate, Constituency, Language
-from core.models import Statistic, Category, Link, Party
-from core.tools import set_cookie, get_cookie, send_mail_to_politician
+from core.forms import PartyPoliticianForm
+from core.forms import PoliticianForm
+from core.forms import RegistrationForm
+from core.models import Answer
+from core.models import Candidacy
+from core.models import Category
+from core.models import Constituency
+from core.models import Language
+from core.models import Link
+from core.models import Mandate
+from core.models import Party
+from core.models import Politician
+from core.models import Question
+from core.models import Statistic
+from core.tools import get_cookie
+from core.tools import send_mail_to_politician
+from core.tools import set_cookie
 from django.conf import settings
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate
+from django.contrib.auth import login
+from django.contrib.auth import logout
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
-from django.db.models import Q, Sum
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.core.urlresolvers import reverse
+from django.db.models import Sum
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView
+from django.views.generic import TemplateView
 
-from textwrap import dedent
-from easy_thumbnails.files import get_thumbnailer
-from meta.views import Meta
-from urllib.parse import urlencode
-from re import split
 import collections
 import csv
-import json
+
+from easy_thumbnails.files import get_thumbnailer
+from meta.views import Meta
+from re import split
+from urllib.parse import urlencode
 
 ##
 # ERROR VIEWS
@@ -51,9 +69,9 @@ def handler500(request):
 
 
 default_meta = Meta(
-    title = 'Freedomvote',
-    description = _('The platform for freedom, technology and politics'),
-    image = '/static/images/logo.png'
+    title='Freedomvote',
+    description=_('The platform for freedom, technology and politics'),
+    image='/static/images/logo.png'
 )
 
 ##
@@ -71,28 +89,24 @@ def initial_edit_view(request, lang):
 
 
 def candidates_view(request):
-    constituencies  = Constituency.objects.all().order_by('name')
-    parties         = Party.objects.all().order_by('name')
-    categories      = (
+    constituencies = Constituency.objects.all().order_by('name')
+    parties = Party.objects.all().order_by('name')
+    categories = (
         Category.objects.filter(statistic__id__gt=0).
         order_by('name').distinct())
-    mandates        = Mandate.objects.all()
+    mandates = Mandate.objects.all()
 
-    constituency = request.GET.get('constituency', None)
-    category = request.GET.get('category', None)
-    search   = request.GET.get('search', None)
-
-    session_answers    = get_cookie(request, 'answers',    {})
+    session_answers = get_cookie(request, 'answers', {})
     session_statistics = get_cookie(request, 'statistics', {})
-    
+
     has_cookie = len(session_answers) > 0 and len(session_statistics) > 0
 
     context = {
-        'categories'    : categories,
-        'parties'       : parties,
-        'meta'          : default_meta,
-        'has_cookie'    : has_cookie,
-        'mandates'      : mandates,
+        'categories': categories,
+        'parties': parties,
+        'meta': default_meta,
+        'has_cookie': has_cookie,
+        'mandates': mandates,
         'constituencies': constituencies
     }
 
@@ -106,7 +120,7 @@ def candidates_view(request):
             query_params['answers_{0}'.format(k)] = v
 
         formatted_query_params = urlencode(query_params)
-        
+
         context['share_url'] = '{0}/share?{1}'.format(
             settings.BASE_URL,
             formatted_query_params
@@ -121,9 +135,9 @@ def candidates_view(request):
 
 def compare_view(request):
     questions = Question.objects.all().order_by('question_number')
-    data      = []
+    data = []
 
-    session_answers    = get_cookie(request, 'answers',    {})
+    session_answers = get_cookie(request, 'answers', {})
     session_statistics = get_cookie(request, 'statistics', {})
 
     if request.method == "POST":
@@ -157,8 +171,8 @@ def compare_view(request):
 
     for question in questions:
         item = {
-            'question' : question,
-            'value'    : session_answers.get('question_%d' % question.id, 0)
+            'question': question,
+            'value': session_answers.get('question_%d' % question.id, 0)
         }
         data.append(item)
 
@@ -167,8 +181,8 @@ def compare_view(request):
             request,
             'core/compare/index.html',
             {
-                'data' : data,
-                'meta' : default_meta
+                'data': data,
+                'meta': default_meta
             }
         )
 
@@ -185,12 +199,12 @@ def share_view(request):
 
     cookies = {
         'statistics': {},
-        'answers'   : {}
+        'answers': {}
     }
 
     for k, v in request.GET.items():
         if '_' in k:
-            cookie_name, variable_name = split('_', k, maxsplit=1) 
+            cookie_name, variable_name = split('_', k, maxsplit=1)
             # V can be a float or int in a string and since we can not
             # parse a float in a string to int we did it this way
             cookies[cookie_name][variable_name] = int(float(v))
@@ -222,52 +236,57 @@ def politician_view(request, politician_id):
         Politician.objects.filter(statistic__id__gt=0).distinct(),
         pk=politician_id)
 
-    answers    = (
+    answers = (
         Answer.objects.
         filter(politician=politician).
         order_by('question__question_number'))
-    links      = (
+    links = (
         Link.objects.filter(politician=politician))
-    cookie     = get_cookie(request, 'answers', {})
+    cookie = get_cookie(request, 'answers', {})
     answer_obs = []
-    candidacies = Candidacy.objects.filter(politician=politician).order_by('-constituency')
+    candidacies = Candidacy.objects.filter(
+        politician=politician).order_by('-constituency')
 
     for a in answers:
         answer_obs.append({
             'own_ans': cookie.get('question_%s' % a.question.id, None),
             'politician_ans': a
         })
-    embed_url_reverse = reverse('politician_statistic_spider_embed', kwargs={'politician_id' : politician_id})
+    embed_url_reverse = reverse('politician_statistic_spider_embed', kwargs={
+                                'politician_id': politician_id})
     embed_url_absolute = request.build_absolute_uri(embed_url_reverse)
 
     meta = Meta(
         title=u'{0} {1}'.format(politician.first_name, politician.last_name),
-        image=get_thumbnailer(politician.image)['large'].url if politician.image else None,
-        description=_("%(first_name)s %(last_name)s on Freedomvote") % { 'first_name': politician.first_name, 'last_name': politician.last_name },
-        url=request.build_absolute_uri(reverse('politician', kwargs={'politician_id':politician.id}))
+        image=get_thumbnailer(politician.image)[
+            'large'].url if politician.image else None,
+        description=_("%(first_name)s %(last_name)s on Freedomvote") % {
+            'first_name': politician.first_name, 'last_name': politician.last_name},
+        url=request.build_absolute_uri(
+            reverse('politician', kwargs={'politician_id': politician.id}))
     )
 
     return render(
         request,
         'core/profile/index.html',
         {
-            'politician'     : politician,
-            'answers'        : answer_obs,
-            'links'          : links,
-            'embed_url'      : embed_url_absolute,
-            'meta'           : meta,
-            'base_url'       : settings.BASE_URL,
-            'candidacies'    : candidacies
+            'politician': politician,
+            'answers': answer_obs,
+            'links': links,
+            'embed_url': embed_url_absolute,
+            'meta': meta,
+            'base_url': settings.BASE_URL,
+            'candidacies': candidacies
         }
     )
 
 
 def politician_statistic_spider_view(request, politician_id):
     statistics = Statistic.get_statistics_by_politician(politician_id)
-    stats      = get_cookie(request, 'statistics', {})
-    values     = {
-        'politician' : [s.accordance for s in statistics],
-        'citizen'    : [
+    stats = get_cookie(request, 'statistics', {})
+    values = {
+        'politician': [s.accordance for s in statistics],
+        'citizen': [
             stats.get('category_%d' % s.category.id, 0)
             for s in statistics]
     }
@@ -282,10 +301,10 @@ def politician_statistic_spider_view(request, politician_id):
 
 
 def politician_statistic_spider_view_embed(request, politician_id):
-    statistics = Statistic.get_statistics_by_politician(politician_id)
-
-    politician_url_reverse = reverse('politician', kwargs={'politician_id' : politician_id})
-    politician_url_absolute = request.build_absolute_uri(politician_url_reverse)
+    politician_url_reverse = reverse(
+        'politician', kwargs={'politician_id': politician_id})
+    politician_url_absolute = request.build_absolute_uri(
+        politician_url_reverse)
 
     return render(
         request,
@@ -299,7 +318,7 @@ def politician_statistic_spider_view_embed(request, politician_id):
 
 def politician_statistic_view(request, politician_id):
     category_id = int(request.GET.get('category', False))
-    titles  = [force_text(_('total'))]
+    titles = [force_text(_('total'))]
 
     if category_id:
         category = get_object_or_404(Category, id=category_id)
@@ -314,12 +333,12 @@ def politician_statistic_view(request, politician_id):
 
         pol_answers = Answer.objects.filter(politician_id=politician_id)
         pairs = []
-        answers    = get_cookie(request, 'answers',    {})
+        answers = get_cookie(request, 'answers', {})
 
         delta_by_cat = collections.defaultdict(lambda: [])
         for ans in pol_answers:
             voter_value = int(answers.get('question_%s' % ans.question_id, 0))
-            delta       = abs(ans.agreement_level - voter_value)
+            delta = abs(ans.agreement_level - voter_value)
             delta_by_cat[ans.question.category_id].append(delta)
 
         for cid, cat in cat_by_id.items():
@@ -328,7 +347,7 @@ def politician_statistic_view(request, politician_id):
 
             pairs.append({
                 'category': cat.name,
-                'value':    (
+                'value': (
                     10 - sum(delta_by_cat[cid]) /
                     float(len(delta_by_cat[cid]))
                 )
@@ -337,13 +356,13 @@ def politician_statistic_view(request, politician_id):
         sorted_pairs = sorted(pairs, key=lambda k: k['category'])
 
         detail = {
-            'categories' : [i['category'] for i in sorted_pairs],
-            'values'     : [i['value']    for i in sorted_pairs]
+            'categories': [i['category'] for i in sorted_pairs],
+            'values': [i['value'] for i in sorted_pairs]
         }
 
         total = sum(detail['values']) / len(detail['values'])
-        pos     = [total]
-        neg     = [(10 - total)]
+        pos = [total]
+        neg = [(10 - total)]
 
         if category_id:
             val = 10 - (
@@ -353,22 +372,22 @@ def politician_statistic_view(request, politician_id):
             neg.append(10 - val)
 
         summary = {
-            'titles' : titles,
-            'values' : {
-                'positive' : pos,
-                'negative' : neg
+            'titles': titles,
+            'values': {
+                'positive': pos,
+                'negative': neg
             }
         }
 
     else:
         statistics = Statistic.get_statistics_by_politician(politician_id)
-        values  = [s.accordance for s in statistics]
-        total   = sum(values) / len(values)
+        values = [s.accordance for s in statistics]
+        total = sum(values) / len(values)
 
         # pos is the green part (agreement level) of the graph,
         # neg is the "rest" (red)
-        pos     = [total]
-        neg     = [(10 - total)]
+        pos = [total]
+        neg = [(10 - total)]
 
         if category_id:
             # if category_id is given, the graph should display this
@@ -379,16 +398,16 @@ def politician_statistic_view(request, politician_id):
             neg.append(10 - statistic.value / 10)
 
         summary = {
-            'titles' : titles,
-            'values' : {
-                'positive' : pos,
-                'negative' : neg
+            'titles': titles,
+            'values': {
+                'positive': pos,
+                'negative': neg
             }
         }
 
-        detail  = {
-            'categories' : [s.category.name for s in statistics],
-            'values'     : values
+        detail = {
+            'categories': [s.category.name for s in statistics],
+            'values': values
         }
 
     return JsonResponse({'summary': summary, 'detail': detail})
@@ -405,7 +424,7 @@ def politician_edit_view(request, unique_key):
 def politician_edit_profile_view(request, unique_key):
     politician = get_object_or_404(Politician, unique_key=unique_key)
 
-    links      = (
+    links = (
         Link.objects.filter(politician=politician))
 
     if request.POST:
@@ -420,25 +439,25 @@ def politician_edit_profile_view(request, unique_key):
         request,
         'core/edit/profile.html',
         {
-            'politician' : politician,
-            'form'       : form,
-            'links'      : links
+            'politician': politician,
+            'form': form,
+            'links': links
         }
     )
 
 
 def politician_edit_questions_view(request, unique_key):
     politician = get_object_or_404(Politician, unique_key=unique_key)
-    questions  = Question.objects.all().order_by('question_number')
-    answers    = Answer.objects.filter(politician=politician)
+    questions = Question.objects.all().order_by('question_number')
+    answers = Answer.objects.filter(politician=politician)
 
     return render(
         request,
         'core/edit/questions.html',
         {
-            'politician' : politician,
-            'questions'  : questions,
-            'answers'    : answers
+            'politician': politician,
+            'questions': questions,
+            'answers': answers
         }
     )
 
@@ -446,15 +465,16 @@ def politician_edit_questions_view(request, unique_key):
 def politician_edit_candidacies_view(request, unique_key):
     if request.method == "GET":
         politician = get_object_or_404(Politician, unique_key=unique_key)
-        candidacies  = Candidacy.objects.filter(politician=politician)
         mandates = Mandate.objects.all()
         mandates_candidacies = {}
         mandates_constituencies = {}
 
         for mandate in mandates:
             try:
-                answer = Candidacy.objects.filter(politician=politician, mandate=mandate).first()
-                constituency = Constituency.objects.filter(mandate=mandate).all().order_by('name')
+                answer = Candidacy.objects.filter(
+                    politician=politician, mandate=mandate).first()
+                constituency = Constituency.objects.filter(
+                    mandate=mandate).all().order_by('name')
             except Candidacy.DoesNotExist:
                 answer = None
 
@@ -480,21 +500,24 @@ def politician_edit_candidacies_view(request, unique_key):
             candidacy = Candidacy.objects.get(id=request.POST.get('candidacy'))
         except Candidacy.DoesNotExist:
             candidacy = Candidacy(mandate=mandate)
-            constituency = Constituency.objects.filter(mandate=mandate).order_by('name').first()
-        
+            constituency = Constituency.objects.filter(
+                mandate=mandate).order_by('name').first()
+
         if answer == "no_candidacy":
-            candidacy = Candidacy.objects.filter(politician=politician, mandate=mandate)
+            candidacy = Candidacy.objects.filter(
+                politician=politician, mandate=mandate)
             candidacy.delete()
         elif answer == "new_candidacy" or answer == "old_candidacy":
             if not isinstance(constituency, Constituency):
-                constituency = Constituency.objects.filter(id=request.POST.get('constituency')).first()
+                constituency = Constituency.objects.filter(
+                    id=request.POST.get('constituency')).first()
             if answer == "new_candidacy":
                 candidacy.is_new = True
             else:
                 candidacy.is_new = False
             candidacy.constituency = constituency
             candidacy.save()
-            politician.candidacy.add(candidacy)     
+            politician.candidacy.add(candidacy)
 
         messages.success(request, _('candidacy_saved_successfully'))
 
@@ -511,7 +534,7 @@ def politician_answer_view(request, unique_key):
             question=question,
             politician=politician,
             defaults={
-                'agreement_level' : agreement_level,
+                'agreement_level': agreement_level,
             }
         )
         answer.agreement_level = agreement_level
@@ -559,8 +582,8 @@ def politician_unpublish_view(request, unique_key):
 
 def politician_link_add_view(request, unique_key):
     politician = get_object_or_404(Politician, unique_key=unique_key)
-    url        = request.POST.get('url')
-    error      = False
+    url = request.POST.get('url')
+    error = False
 
     if not url.startswith(('http://', 'https://')):
         url = 'http://%s' % url
@@ -576,14 +599,14 @@ def politician_link_add_view(request, unique_key):
         l.save()
         url = ''
 
-    links      = (
+    links = (
         Link.objects.filter(politician=politician))
 
     return render(request, 'core/edit/links.html', {
-        'links'      : links,
-        'politician' : politician,
-        'error'      : error,
-        'input'      : url
+        'links': links,
+        'politician': politician,
+        'error': error,
+        'input': url
     })
 
 
@@ -592,12 +615,12 @@ def politician_link_delete_view(request, unique_key, link_id):
     link = get_object_or_404(Link, id=link_id)
     link.delete()
 
-    links      = (
+    links = (
         Link.objects.filter(politician=politician))
 
     return render(request, 'core/edit/links.html', {
-        'links'      : links,
-        'politician' : politician
+        'links': links,
+        'politician': politician
     })
 
 ##
@@ -661,8 +684,8 @@ def party_politician_add_view(request, party_name):
         request,
         'core/party/politician_edit.html',
         {
-            'politician' : None,
-            'form'       : form
+            'politician': None,
+            'form': form
         }
     )
 
@@ -690,8 +713,8 @@ def party_politician_edit_view(request, party_name, politician_id):
         request,
         'core/party/politician_edit.html',
         {
-            'politician' : None,
-            'form'       : form
+            'politician': None,
+            'form': form
         }
     )
     pass
@@ -717,7 +740,7 @@ def party_export_view(request, party_name):
     for p in politicians:
         cols = [p.first_name, p.last_name, p.unique_url]
         writer.writerow([c.encode('latin1')
-                        if c is not None else '' for c in cols
+                         if c is not None else '' for c in cols
                          ])
 
     return response
@@ -733,7 +756,6 @@ def party_politician_delete_view(request, party_name, politician_id):
         ))
 
     return redirect(reverse('party_dashboard', args=[party_name]))
-
 
 
 @require_party_login
@@ -760,19 +782,19 @@ def party_upload_csv(request, party_name):
                 lang = fields[3].strip()
                 language = Language.objects.filter(iso_code=lang)
 
-                if Politician.objects.filter(email=email).count() is 0:
-                    if language.count() is 0:
+                if Politician.objects.filter(email=email).count() == 0:
+                    if language.count() == 0:
                         language = Language(iso_code=lang)
                         language.save()
                     else:
                         language = language.first()
 
                     politician = Politician.objects.create(
-                        first_name = fields[0],
-                        last_name = fields[1],
-                        email = email,
-                        user_id = request.user.id,
-                        language = language
+                        first_name=fields[0],
+                        last_name=fields[1],
+                        email=email,
+                        user_id=request.user.id,
+                        language=language
                     )
 
                     politician.save()
@@ -786,9 +808,9 @@ def party_upload_csv(request, party_name):
                 continue
 
         messages.success(
-        request, _('politicians_import_success') % (
-            counter
-        ))
+            request, _('politicians_import_success') % (
+                counter
+            ))
     except:
         messages.error(request, _('politician_add_error'))
 
@@ -812,8 +834,10 @@ def party_email_view(request, party_name):
         subjects = {}
         bodies = {}
         for language in languages:
-            subjects.update({language: request.POST.get('subject_' + str(language), None)})
-            bodies.update({language: request.POST.get('message_' + str(language), None)})
+            subjects.update({language: request.POST.get(
+                'subject_' + str(language), None)})
+            bodies.update({language: request.POST.get(
+                'message_' + str(language), None)})
         else:
             subjects.update({'default': request.POST.get('subject', None)})
             bodies.update({'default': request.POST.get('message', None)})
@@ -833,33 +857,33 @@ def party_email_view(request, party_name):
                 if Answer.objects.filter(politician_id=politician.id).count() < questions_count:
                     recipients.append(politician)
 
-        if len(recipients) is not 0:
+        if len(recipients) != 0:
             for recipient in recipients:
                 if len(languages) > 0:
                     send_mail(
                         subjects[recipient.language].replace('$(first_name)', recipient.first_name).
-                                replace('$(last_name)', recipient.last_name),
+                        replace('$(last_name)', recipient.last_name),
                         bodies[recipient.language].replace('$(first_name)', recipient.first_name).
-                                replace('$(last_name)', recipient.last_name).
-                                replace('$(url)', recipient.unique_url),
+                        replace('$(last_name)', recipient.last_name).
+                        replace('$(url)', recipient.unique_url),
                         settings.DEFAULT_FROM_EMAIL,
                         [recipient.email],
                         fail_silently=False)
                 else:
                     send_mail(
                         subjects['default'].replace('$(first_name)', recipient.first_name).
-                                replace('$(last_name)', recipient.last_name),
+                        replace('$(last_name)', recipient.last_name),
                         bodies['default'].replace('$(first_name)', recipient.first_name).
-                                replace('$(last_name)', recipient.last_name).
-                                replace('$(url)', recipient.unique_url),
+                        replace('$(last_name)', recipient.last_name).
+                        replace('$(url)', recipient.unique_url),
                         settings.DEFAULT_FROM_EMAIL,
                         [recipient.email],
                         fail_silently=False)
 
             messages.success(
-            request, _('politician_email_sent_successfull') % (
-                len(recipients)
-            ))
+                request, _('politician_email_sent_successfull') % (
+                    len(recipients)
+                ))
         else:
             messages.error(request, _('politician_email_zero_error'))
 

@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
 import configparser
-from django.utils.translation import ugettext_lazy as _
+import os
+
 from datetime import datetime
+from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -121,7 +122,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djangocms_admin_style',
-    'djangocms_text_ckeditor',
     'django.contrib.admin',
     'django.contrib.messages',
     'treebeard',

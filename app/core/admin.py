@@ -1,10 +1,10 @@
+from . import models
 from django.conf import settings
 from django.contrib import admin
-from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
-from . import models
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 
 
 class PartyAdmin(admin.ModelAdmin):
@@ -70,10 +70,10 @@ class LanguageAdmin(admin.ModelAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(models.Party,      PartyAdmin)
+admin.site.register(models.Party, PartyAdmin)
 admin.site.register(models.Politician, PoliticianAdmin)
-admin.site.register(models.Category,   CategoryAdmin)
-admin.site.register(models.Question,   QuestionAdmin)
-admin.site.register(models.Mandate,    MandateAdmin)
+admin.site.register(models.Category, CategoryAdmin)
+admin.site.register(models.Question, QuestionAdmin)
+admin.site.register(models.Mandate, MandateAdmin)
 admin.site.register(models.Constituency, ConstituencyAdmin)
-admin.site.register(models.Language,   LanguageAdmin)
+admin.site.register(models.Language, LanguageAdmin)

@@ -1,13 +1,13 @@
-from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
-from django.utils.translation import gettext as _
-from textwrap import dedent
 import datetime
 import json
 
+from django.conf import settings
+from django.core.mail import send_mail
+from django.utils.translation import gettext as _
+from textwrap import dedent
 
-def set_cookie(response, key, value, days_expire = 7):
+
+def set_cookie(response, key, value, days_expire=7):
     if days_expire is None:
         max_age = 365 * 24 * 60 * 60  # one year
     else:
@@ -34,9 +34,9 @@ def get_cookie(request, key, default):
 
 
 def send_mail_to_politician(request, politician):
-        send_mail(
-            str(_('Freedomvote account link')),
-            dedent(str(_("""Hello %(first_name)s %(last_name)s,
+    send_mail(
+        str(_('Freedomvote account link')),
+        dedent(str(_("""Hello %(first_name)s %(last_name)s,
 
             You receive the link for your profile on Freedomvote: %(url)s
 
@@ -44,11 +44,11 @@ def send_mail_to_politician(request, politician):
 
             Sincerely,
             The Freedomvote Team""") % {
-                'first_name': politician.first_name,
-                'last_name': politician.last_name,
-                'url': politician.unique_url
-            })),
-            settings.DEFAULT_FROM_EMAIL,
-            [politician.email],
-            fail_silently=False,
-        )
+            'first_name': politician.first_name,
+            'last_name': politician.last_name,
+            'url': politician.unique_url
+        })),
+        settings.DEFAULT_FROM_EMAIL,
+        [politician.email],
+        fail_silently=False,
+    )

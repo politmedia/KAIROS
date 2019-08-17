@@ -1,5 +1,6 @@
-from modeltranslation.translator import translator, TranslationOptions
 from core import models
+from modeltranslation.translator import TranslationOptions
+from modeltranslation.translator import translator
 
 
 class PartyTranslationOptions(TranslationOptions):
@@ -15,9 +16,10 @@ class QuestionTranslationOptions(TranslationOptions):
 
 
 class ConstituencyTranslationOptions(TranslationOptions):
-	fields = ('name',)
+    fields = ('name',)
 
-translator.register(models.Party,    PartyTranslationOptions)
+
+translator.register(models.Party, PartyTranslationOptions)
 translator.register(models.Category, CategoryTranslationOptions)
 translator.register(models.Question, QuestionTranslationOptions)
 translator.register(models.Constituency, ConstituencyTranslationOptions)
