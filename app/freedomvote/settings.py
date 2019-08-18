@@ -267,6 +267,7 @@ THUMBNAIL_ALIASES = {
         'medium': {'size': (300, 300), 'crop': True, 'quality': 100},
         'large': {'size': (500, 500), 'crop': True, 'quality': 100},
         'icon': {'size': (16,  16), 'crop': True, 'quality': 100},
+        'profile': {'size': (150, 150), 'crop': True, 'quality': 100},
     },
 }
 
