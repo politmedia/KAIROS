@@ -1,39 +1,34 @@
 {% load i18n static thumbnail party %}
 
 <div class="row">
-    <div class="col-md-3 col-lg-3">
-        <img class="img-thumbnail" src="{% if politician.image %}{{politician.image|thumbnail_url:'large'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
-        <div class="row mvm">
-            <div class="col-md-12 mbs">
+    <div class="col-md-3 col-lg-3 col-xs-12 center-block">
+        <img class="img-thumbnail visible-lg visible-md mtm" src="{% if politician.image %}{{politician.image|thumbnail_url:'large'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
+        <img class="img-thumbnail visible-sm visible-xs center-block" src="{% if politician.image %}{{politician.image|thumbnail_url:'profile'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
+        <div class="row mvm visible-lg visible-md">
+            <div class="col-md-6 mbs">
                 <a class="share-button share-button--facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" title="{% trans "Share" %}" role="button" aria-label="{% trans "Share" %}" class="share-button">
                     <i class="fa fa-facebook fa-fw"></i>{% trans "Share" %}
                 </a>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-6 text-right">
                 <a class="share-button share-button--twitter" href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&hashtags=freedomvote" target="_blank" title="{% trans "Tweet" %}" aria-label="{% trans "Tweet" %}" class="share-button">
                     <i class="fa fa-twitter fa-fw"></i>{% trans "Tweet" %}
                 </a>
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-lg-4 details">
-        <h2 class="mt0">{{ politician.first_name }} {{ politician.last_name }}</h2>
-
-        {% if politician.party %}
-        <div class="row">
-            <div class="col-md-12"><strong>{% trans 'party' %}:</strong> {% if politician.party %}{% party_tag politician.party %}{%else%}{{politician.party_other}}{% endif %}</div>
-        </div>
-        {% endif %}
+    <div class="col-md-4 col-lg-4 col-xs-12 details">
+        <h2>{{ politician.first_name }} {{ politician.last_name }}{% if politician.party or politician.party_other %}<br /><small>{% trans 'party' %}: {% if politician.party %}{% party_tag politician.party %}{% else %}{{ politician.party_other }}{% endif %}</small>{% endif %}</h2>
 
         {% if politician.past_contributions %}
         <div class="row">
-            <div class="col-md-12"><strong>{% trans 'past_contributions' %}:</strong> {{politician.past_contributions}}</div>
+            <div class="col-md-12"><strong>{% trans 'past_contributions' %}:</strong> {{ politician.past_contributions }}</div>
         </div>
         {% endif %}
 
         {% if politician.future_plans %}
         <div class="row">
-            <div class="col-md-12"><strong>{% trans 'future_plans' %}:</strong> {{politician.future_plans}}</div>
+            <div class="col-md-12"><strong>{% trans 'future_plans' %}:</strong> {{ politician.future_plans }}</div>
         </div>
         {% endif %}
 
@@ -41,52 +36,52 @@
             <div class="col-md-12">
                 <strong> {% trans 'show_own_spider' %}:</strong>
                 {% if 'statistics' in request.COOKIES and request.COOKIES.statistics != '{}' %}
-                    <input type="checkbox" id="show_citizen" checked>
+                <input type="checkbox" id="show_citizen" checked>
                 {% else %}
-                    <a href="{% url 'compare' %}">{% trans 'add_own_opinion' %}</a>
-                    <input type="checkbox" id="show_citizen" style="display:none">
+                <a href="{% url 'compare' %}">{% trans 'add_own_opinion' %}</a>
+                <input type="checkbox" id="show_citizen" style="display:none">
                 {% endif %}
             </div>
         </div>
 
         {% if candidacies %}
-        <hr>
+        <hr />
         <div class="row">
             <div class="col-md-12 mbm">
                 <strong>{% trans 'candidacies' %}</strong>
             </div>
             <div class="col-md-12">
                 {% for candidacy in candidacies %}
-                    <p>{{ candidacy.mandate }} {% trans 'in' %} {{ candidacy.constituency }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %})</p>
+                <p>{{ candidacy.mandate }} {% trans 'in' %} {{ candidacy.constituency }} ({% if candidacy.is_new %}{% trans 'new_candidacy' %}{% else %}{% trans 'old_candidacy' %}{% endif %})</p>
                 {% endfor %}
             </div>
         </div>
         {% endif %}
 
         {% if links %}
-        <hr>
+        <hr />
         <div class="row">
             <div class="col-md-12 mbm">
                 <strong>{% trans 'links' %}</strong>
             </div>
             <div class="col-md-12">
                 {% for link in links %}
-                    <p class="socialmedia-link">
-                        <i class="fa socialmedia-link-icon" aria-hidden="true"></i>
-                        <a class="socialmedia-link-anchor" href="{{link.url}}"></a>
-                    </p>
+                <p class="socialmedia-link">
+                    <i class="fa socialmedia-link-icon" aria-hidden="true"></i>
+                    <a class="socialmedia-link-anchor" href="{{link.url}}"></a>
+                </p>
                 {% endfor %}
             </div>
         </div>
         {% endif %}
     </div>
-    <div class="col-md-5 col-lg-5">
+    <div class="col-md-5 col-lg-5 col-xs-12">
         <div
-            class="spider-container"
-            id="chart"
-            data-url="{% url 'politician_statistic_spider' politician_id=politician.id %}?compare">
-        </div>
-        <p class="embed-iframe"><i class="fa fa-share" aria-hidden="true"></i> {% trans 'embed_iframe' %}</p>
-        <input type="text" class="form-control embed-iframe-code" value="&lt;iframe src=&quot;{{ embed_url }}&quot; frameborder=&quot;0&quot; width=&quot;400px&quot; height=&quot;280px&quot;&gt;&lt;/iframe&gt;">
+        class="spider-container"
+        id="chart"
+        data-url="{% url 'politician_statistic_spider' politician_id=politician.id %}?compare">
     </div>
+    <p class="embed-iframe"><i class="fa fa-share" aria-hidden="true"></i> {% trans 'embed_iframe' %}</p>
+    <input type="text" class="form-control embed-iframe-code" value="&lt;iframe src=&quot;{{ embed_url }}&quot; frameborder=&quot;0&quot; width=&quot;400px&quot; height=&quot;280px&quot;&gt;&lt;/iframe&gt;">
+</div>
 </div>
