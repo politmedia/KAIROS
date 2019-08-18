@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-3 col-lg-3 col-xs-12 center-block">
         <img class="img-thumbnail visible-lg visible-md mtm" src="{% if politician.image %}{{politician.image|thumbnail_url:'large'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
-        <img class="img-thumbnail visible-sm visible-xs center-block" src="{% if politician.image %}{{politician.image|thumbnail_url:'profile'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}">
+        <img class="img-thumbnail visible-sm visible-xs center-block" src="{% if politician.image %}{{politician.image|thumbnail_url:'profile'}}{% else %}{% static 'images/placeholder.svg' %}{% endif %}" height="150" width="150">
         <div class="row mvm visible-lg visible-md">
             <div class="col-md-6 mbs">
                 <a class="share-button share-button--facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}" target="_blank" title="{% trans "Share" %}" role="button" aria-label="{% trans "Share" %}" class="share-button">
