@@ -6,15 +6,15 @@ KAIROS is a fork of [KAIROS](https://github.com/politmedia/KAIROS/) with additio
 
 ## Used in
 
-- Swiss Election 2015 - [ch15.kairos.ch](https://ch15.kairos.ch/)
-- Dutch Election 2017 - [kairos.nl](https://kairos.nl/)
-- Swiss Election 2018 for the canton of bern - [ktbe18.kairos.ch](https://ktbe18.kairos.ch/)
-- Swiss Election 2018 for the city of zurich - [stadtzh18.kairos.ch](https://stadtzh18.kairos.ch/)
-- Swiss Election 2019 - [ch19.kairos.ch](https://ch19.kairos.ch/)
+- Swiss Election 2015 - [ch15.freedomvote.ch](https://ch15.freedomvote.ch/)
+- Dutch Election 2017 - [freedomvote.nl](https://freedomvote.nl/)
+- Swiss Election 2018 for the canton of bern - [ktbe18.freedomvote.ch](https://ktbe18.freedomvote.ch/)
+- Swiss Election 2018 for the city of zurich - [stadtzh18.freedomvote.ch](https://stadtzh18.freedomvote.ch/)
+- Swiss Election 2019 - [ch19.freedomvote.ch](https://ch19.freedomvote.ch/)
 
 ## How does it look?
 
-This is how KAIROS looked for the Swiss Election in 2015 - [kairos.ch](https://kairos.ch/)
+This is how KAIROS looked for the Swiss Election in 2015 - [freedomvote.ch](https://freedomvote.ch/)
 
 ![kairos.ch](https://raw.githubusercontent.com/politmedia/kairos/master/tools/screenshot.png)
 
