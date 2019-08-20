@@ -35,15 +35,15 @@ def get_cookie(request, key, default):
 
 def send_mail_to_politician(request, politician):
     send_mail(
-        str(_('Freedomvote account link')),
+        str(_('KAIROS account link')),
         dedent(str(_("""Hello %(first_name)s %(last_name)s,
 
-            You receive the link for your profile on Freedomvote: %(url)s
+            You receive the link for your profile on KAIROS: %(url)s
 
             Keep this link and use it to login to your profile again.
 
             Sincerely,
-            The Freedomvote Team""") % {
+            The KAIROS Team""") % {
             'first_name': politician.first_name,
             'last_name': politician.last_name,
             'url': politician.unique_url

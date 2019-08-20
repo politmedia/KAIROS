@@ -1,5 +1,5 @@
-# How to do Freedomvote
-This guide is written in a chronological order, to assist you in the process of using Freedomvote in your campaign.
+# How to do KAIROS
+This guide is written in a chronological order, to assist you in the process of using KAIROS in your campaign.
 
 ## Preperation
 
@@ -19,8 +19,8 @@ This guide is written in a chronological order, to assist you in the process of 
 * Try answering the questions yourself, to verify that the questions are unambiguous
 
 ### Branding
-* How will the Freedomvote page be promoted
-* Will the Freedomvote page have to be branded, regarding logo's, colors, fonts, etc.
+* How will the KAIROS page be promoted
+* Will the KAIROS page have to be branded, regarding logo's, colors, fonts, etc.
 * What information should be present in the page is linked (HTML meta tags), this applies to social media in particular
 
 ### Information about politicans and parties
@@ -35,7 +35,7 @@ This guide is written in a chronological order, to assist you in the process of 
 ### Generic information
 * What generic pages should be present, and what should be on them
 
-## Setup Freedomvote
+## Setup KAIROS
 
 ### Technicalities
 * Register a domain

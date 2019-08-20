@@ -5,7 +5,7 @@ import re
 import csv
 import codecs
 
-SENDER='freedomvote@freedomvote.ch'
+SENDER='kairos@kairos.software'
 
 reader = csv.reader(codecs.open('party_accounts.csv', encoding='UTF-8'))
 
@@ -41,12 +41,12 @@ for row in reader:
     mail = (template
         .replace('RECIPIENT', recipient)
         .replace('FROM',      SENDER)
-        .replace('LINK',      'http://freedomvote.ch/party/%s' % login)
+        .replace('LINK',      'http://kairos.ch/party/%s' % login)
         .replace('PASSWORD',  password)
     )
 
     # Write result
-    outfile = u'generated_freedomvote_mail_%s_%s.eml' % (party, state)
+    outfile = u'generated_kairos_mail_%s_%s.eml' % (party, state)
 
     outfile = re.sub(r'[^\.\w0-9]', '_', outfile).lower()
 

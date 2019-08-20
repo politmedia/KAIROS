@@ -69,7 +69,7 @@ def handler500(request):
 
 
 default_meta = Meta(
-    title='Freedomvote',
+    title='KAIROS',
     description=_('The platform for freedom, technology and politics'),
     image='/static/images/logo.png'
 )
@@ -260,7 +260,7 @@ def politician_view(request, politician_id):
         title=u'{0} {1}'.format(politician.first_name, politician.last_name),
         image=get_thumbnailer(politician.image)[
             'large'].url if politician.image else None,
-        description=_("%(first_name)s %(last_name)s on Freedomvote") % {
+        description=_("%(first_name)s %(last_name)s on KAIROS") % {
             'first_name': politician.first_name, 'last_name': politician.last_name},
         url=request.build_absolute_uri(
             reverse('politician', kwargs={'politician_id': politician.id}))
@@ -727,7 +727,7 @@ def party_export_view(request, party_name):
     response = HttpResponse(content_type='text/csv')
 
     response['Content-Disposition'] = (
-        'attachment; filename="freedomvote_export_%s.csv"' % party_name
+        'attachment; filename="kairos_export_%s.csv"' % party_name
     )
 
     writer = csv.writer(response)

@@ -24,7 +24,7 @@ jQuery(function ($){
         form.serialize(),
         function(data){
             $('#links').html(data)
-            FREEDOMVOTE.Socialmedia.render()
+            KAIROS.Socialmedia.render()
         }
     )
   })
@@ -38,7 +38,7 @@ jQuery(function ($){
         form.serialize(),
         function(data){
             $('#links').html(data)
-            FREEDOMVOTE.Socialmedia.render()
+            KAIROS.Socialmedia.render()
         }
     )
   })

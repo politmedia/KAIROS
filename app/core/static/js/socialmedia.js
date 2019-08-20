@@ -1,4 +1,4 @@
-FREEDOMVOTE.Socialmedia = {}
+KAIROS.Socialmedia = {}
 
 jQuery(function($) {
   'use strict'
@@ -46,7 +46,7 @@ jQuery(function($) {
     }
   }
 
-  FREEDOMVOTE.Socialmedia.render = function() {
+  KAIROS.Socialmedia.render = function() {
     $('.socialmedia-link').each(function(index) {
       var socialmediaItem = $(this),
         socialmediaItemIcon = socialmediaItem.find('.socialmedia-link-icon'),
@@ -78,5 +78,5 @@ jQuery(function($) {
     var regex = new RegExp(/^https?:\/\/[w.]*([0-9a-z_][0-9a-z._-]*[0-9a-z])\/?/)
     return regex.exec(url)
   }
-  FREEDOMVOTE.Socialmedia.render()
+  KAIROS.Socialmedia.render()
 })

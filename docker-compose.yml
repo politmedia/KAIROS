@@ -17,9 +17,9 @@ services:
     volumes:
       - ./tools/docker/cache_table.sql:/docker-entrypoint-initdb.d/cache_table.sql
     environment:
-      - POSTGRES_DB=freedomvote
-      - POSTGRES_USER=freedomvote
-      - POSTGRES_PASSWORD=freedomvote
+      - POSTGRES_DB=kairos
+      - POSTGRES_USER=kairos
+      - POSTGRES_PASSWORD=kairos
   phppgadmin:
     image: zhajor/docker-phppgadmin
     ports:

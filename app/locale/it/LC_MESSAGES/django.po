@@ -1,11 +1,11 @@
-# Freedomvote Translation
-# Copyright (C) Freedomvote
-# This file is distributed under the same license as the freedomvote package.
+# KAIROS Translation
+# Copyright (C) KAIROS
+# This file is distributed under the same license as the kairos package.
 # Jonas Metzener <jonas.metzener@adfinis-sygroup.ch>, 2015.
 # Nico Rikken <nico.rikken@fsfe.org>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: freedomvote\n"
+"Project-Id-Version: kairos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-18 14:48+0200\n"
 "PO-Revision-Date: 2018-10-29 15:26\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: freedomvote\n"
+"X-Crowdin-Project: kairos\n"
 "X-Crowdin-Language: it\n"
 "X-Crowdin-File: /master/app/locale/en/LC_MESSAGES/django.po\n"
 
@@ -340,7 +340,7 @@ msgstr "Filtrare"
 
 #: core/templates/core/candidates/index.html:16
 msgid "opinion_admin"
-msgstr "Freedomvote"
+msgstr "KAIROS"
 
 #: core/templates/core/candidates/index.html:21
 #: core/templates/core/candidates/index.html:30
@@ -373,16 +373,16 @@ msgid "Registration for candidates"
 msgstr "Registrazione per i candidati"
 
 #: core/templates/core/candidates/registration.html:7
-msgid "After the registration you will get a link to your personal profile on Freedomvote"
-msgstr "Dopo la registrazione riceverai un link al tuo profilo personale su Freedomvote"
+msgid "After the registration you will get a link to your personal profile on KAIROS"
+msgstr "Dopo la registrazione riceverai un link al tuo profilo personale su KAIROS"
 
 #: core/templates/core/candidates/registration.html:13
 msgid "Register"
 msgstr "Registrare"
 
 #: core/templates/core/candidates/registration_send_mail.html:6
-msgid "We have sent you a link to your profile on Freedomvote. It could take a few minutes to show up in your inbox."
-msgstr "Ti abbiamo inviato per email un link al tuo profilo su Freedomvote. Potrebbero essere necessari alcuni minuti per essere visualizzati nella tua casella di posta."
+msgid "We have sent you a link to your profile on KAIROS. It could take a few minutes to show up in your inbox."
+msgstr "Ti abbiamo inviato per email un link al tuo profilo su KAIROS. Potrebbero essere necessari alcuni minuti per essere visualizzati nella tua casella di posta."
 
 #: core/templates/core/compare/index.html:13
 #: core/templates/core/edit/questions.html:11
@@ -540,8 +540,8 @@ msgstr "Le sue risposte sono state annullate"
 
 #: core/views.py:240
 #, python-format
-msgid "%(first_name)s %(last_name)s on Freedomvote"
-msgstr "%(first_name)s %(last_name)s a Freedomvote"
+msgid "%(first_name)s %(last_name)s on KAIROS"
+msgstr "%(first_name)s %(last_name)s a KAIROS"
 
 #: core/views.py:296
 msgid "total"
@@ -588,39 +588,39 @@ msgid "politician_delete_success"
 msgstr "Politico \"%s %s\" è stato annullato correttamente"
 
 #: core/views.py:710
-msgid "Freedomvote account link"
-msgstr "Collegamento all'account Freedomvote"
+msgid "KAIROS account link"
+msgstr "Collegamento all'account KAIROS"
 
 #: core/views.py:711
 #, python-format
 msgid "Hello %(first_name)s %(last_name)s,\n\n"
-"            You receive the link for your profile on Freedomvote: %(url)s\n\n"
+"            You receive the link for your profile on KAIROS: %(url)s\n\n"
 "            Keep this link and use it to login to your profile again.\n\n"
 "            Sincerely,\n"
-"            The Freedomvote Team"
+"            The KAIROS Team"
 msgstr "Ciao %(first_name)s %(last_name)s,\n\n"
-"            Ricevi il link per il tuo profilo su Freedomvote: %(url)s\n\n"
+"            Ricevi il link per il tuo profilo su KAIROS: %(url)s\n\n"
 "            Mantieni questo link e utilizzalo per accedere nuovamente al tuo profilo.\n\n"
 "            Cordiali saluti,\n"
-"            Il team di Freedomvote"
+"            Il team di KAIROS"
 
-#: freedomvote/settings.py:228
+#: kairos/settings.py:228
 msgid "german"
 msgstr "Tedesco"
 
-#: freedomvote/settings.py:229
+#: kairos/settings.py:229
 msgid "english"
 msgstr "Inglese"
 
-#: freedomvote/settings.py:230
+#: kairos/settings.py:230
 msgid "french"
 msgstr "Francese"
 
-#: freedomvote/settings.py:231
+#: kairos/settings.py:231
 msgid "italian"
 msgstr "Italiano"
 
-#: freedomvote/settings.py:232
+#: kairos/settings.py:232
 msgid "dutch"
 msgstr "Neerlandese"
 

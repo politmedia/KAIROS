@@ -1,4 +1,4 @@
-# Freedomvote
+# KAIROS
 A tool to represent the views of politicians on certain topics as a help to the voters.
 
 The following overview explains the key aspects of the software and shows, what one can expect

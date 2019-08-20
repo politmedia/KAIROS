@@ -3,7 +3,7 @@
 .DEFAULT_GOAL := help
 
 DJANGO_ADMIN_USER=admin
-PGPASSWORD=freedomvote
+PGPASSWORD=kairos
 DB_PORT=5432
 
 help:
@@ -27,21 +27,21 @@ docker-clean: ## Remove the docker environment
 
 docker-init: ## Initialize the docker environment
 	@docker-compose up -d --no-recreate
-	@docker exec -it freedomvote_web_1 python app/manage.py migrate
-	@docker exec -it freedomvote_web_1 app/manage.py loaddata tools/docker/user.json
+	@docker exec -it kairos_web_1 python app/manage.py migrate
+	@docker exec -it kairos_web_1 app/manage.py loaddata tools/docker/user.json
 	@docker-compose stop
 
 docker-makemigrations: ## Generate django migrations in the docker environment
-	@docker exec -it freedomvote_web_1 python app/manage.py makemigrations
+	@docker exec -it kairos_web_1 python app/manage.py makemigrations
 
 docker-migrate: ## Run django migrations in the docker environment
-	@docker exec -it freedomvote_web_1 python app/manage.py migrate
+	@docker exec -it kairos_web_1 python app/manage.py migrate
 
 docker-makemessages: ## Generate django translations in the docker environment
-	@docker exec -it freedomvote_web_1 python app/manage.py makemessages -a
+	@docker exec -it kairos_web_1 python app/manage.py makemessages -a
 
 docker-compilemessages: ## Compile docker translations in the docker environment
-	@docker exec -it freedomvote_web_1 python app/manage.py compilemessages
+	@docker exec -it kairos_web_1 python app/manage.py compilemessages
 
 docker-pw: ## Change the django superuser password in the docker environment
-	@docker exec -it freedomvote_web_1 python app/manage.py changepassword ${DJANGO_ADMIN_USER}
+	@docker exec -it kairos_web_1 python app/manage.py changepassword ${DJANGO_ADMIN_USER}
