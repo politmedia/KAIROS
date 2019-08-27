@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: crowdin.com\n"
-"X-Crowdin-Project: kairos\n"
+"X-Crowdin-Project: freedomvote\n"
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: /master/app/locale/en/LC_MESSAGES/django.po\n"
 
