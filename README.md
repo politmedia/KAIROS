@@ -2,7 +2,7 @@
 
 KAIROS is a Voting Advice Application (VAA) which is developed and provided as an open source software. It allows you to run your own VAA with the views of politicians and parties to questions of a specific topic as a help to the voters.
 
-KAIROS is a fork of [KAIROS](https://github.com/politmedia/KAIROS/) with additional features. It is powered by [PolitMedia](https://www.politmedia.ch/). For more information, see [KAIROS.SOFTWARE](https://kairos.software/).
+KAIROS is a fork of [Freedomvote](https://github.com/freedomvote/freedomvote/) with additional features. It is powered by [PolitMedia](https://www.politmedia.ch/). For more information, see [KAIROS.SOFTWARE](https://kairos.software/).
 
 ## Used in
 
@@ -137,7 +137,7 @@ $ make docker-compilemessages
 
 # Translation
 
-We use crowdin.com for translation. If you want to help us to translate KAIROS into your language, head over to https://crowdin.com/project/kairos and start working :)
+We use crowdin.com for translation. If you want to help us to translate Freedomvote into your language, head over to https://crowdin.com/project/freedomvote  and start working :)
 
 # License
 
