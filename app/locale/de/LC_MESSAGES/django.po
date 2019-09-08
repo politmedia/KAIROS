@@ -1,11 +1,11 @@
-# Freedomvote Translation
-# Copyright (C) Freedomvote
-# This file is distributed under the same license as the freedomvote package.
+# KAIROS Translation
+# Copyright (C) KAIROS
+# This file is distributed under the same license as the kairos package.
 # Jonas Metzener <jonas.metzener@adfinis-sygroup.ch>, 2015.
 # Nico Rikken <nico.rikken@fsfe.org>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: freedomvote\n"
+"Project-Id-Version: kairos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-18 14:48+0200\n"
 "PO-Revision-Date: 2018-12-13 10:48\n"
@@ -336,7 +336,7 @@ msgstr "Filtern"
 
 #: core/templates/core/candidates/index.html:16
 msgid "opinion_admin"
-msgstr "Freedomvote"
+msgstr "KAIROS"
 
 #: core/templates/core/candidates/index.html:21
 #: core/templates/core/candidates/index.html:30
@@ -369,16 +369,16 @@ msgid "Registration for candidates"
 msgstr "Registration für Kandidaten"
 
 #: core/templates/core/candidates/registration.html:7
-msgid "After the registration you will get a link to your personal profile on Freedomvote"
-msgstr "Nach der Registration werden Sie einen Link zu Ihrem persönlichen Profil bei Freedomvote erhalten"
+msgid "After the registration you will get a link to your personal profile on KAIROS"
+msgstr "Nach der Registration werden Sie einen Link zu Ihrem persönlichen Profil bei KAIROS erhalten"
 
 #: core/templates/core/candidates/registration.html:13
 msgid "Register"
 msgstr "Registrieren"
 
 #: core/templates/core/candidates/registration_send_mail.html:6
-msgid "We have sent you a link to your profile on Freedomvote. It could take a few minutes to show up in your inbox."
-msgstr "Wir haben Ihnen einen Link zu Ihrem Profil bei Freedomvote geschickt. Es könnte ein paar Minuten dauern, bis die E-Mail in Ihrem Posteingang angezeigt wird."
+msgid "We have sent you a link to your profile on KAIROS. It could take a few minutes to show up in your inbox."
+msgstr "Wir haben Ihnen einen Link zu Ihrem Profil bei KAIROS geschickt. Es könnte ein paar Minuten dauern, bis die E-Mail in Ihrem Posteingang angezeigt wird."
 
 #: core/templates/core/compare/index.html:13
 #: core/templates/core/edit/questions.html:11
@@ -536,8 +536,8 @@ msgstr "Ihre Antworten wurden zurückgesetzt"
 
 #: core/views.py:240
 #, python-format
-msgid "%(first_name)s %(last_name)s on Freedomvote"
-msgstr "%(first_name)s %(last_name)s bei Freedomvote"
+msgid "%(first_name)s %(last_name)s on KAIROS"
+msgstr "%(first_name)s %(last_name)s bei KAIROS"
 
 #: core/views.py:296
 msgid "total"
@@ -584,39 +584,39 @@ msgid "politician_delete_success"
 msgstr "Politiker '%s %s' wurde erfolgreich gelöscht"
 
 #: core/views.py:710
-msgid "Freedomvote account link"
-msgstr "Freedomvote - Link zum Profil"
+msgid "KAIROS account link"
+msgstr "KAIROS - Link zum Profil"
 
 #: core/views.py:711
 #, python-format
 msgid "Hello %(first_name)s %(last_name)s,\n\n"
-"            You receive the link for your profile on Freedomvote: %(url)s\n\n"
+"            You receive the link for your profile on KAIROS: %(url)s\n\n"
 "            Keep this link and use it to login to your profile again.\n\n"
 "            Sincerely,\n"
-"            The Freedomvote Team"
+"            The KAIROS Team"
 msgstr "Hallo %(first_name)s %(last_name)s,\n\n"
-"            Sie erhalten den Link zu Ihrem Profil bei Freedomvote: %(url)s\n\n"
+"            Sie erhalten den Link zu Ihrem Profil bei KAIROS: %(url)s\n\n"
 "            Bewahren Sie den Link auf und benutzen Sie ihn um sich wieder einzuloggen.\n\n"
 "            Freundliche Grüsse,\n"
-"            Das Freedomvote Team"
+"            Das KAIROS Team"
 
-#: freedomvote/settings.py:228
+#: kairos/settings.py:228
 msgid "german"
 msgstr "Deutsch"
 
-#: freedomvote/settings.py:229
+#: kairos/settings.py:229
 msgid "english"
 msgstr "Englisch"
 
-#: freedomvote/settings.py:230
+#: kairos/settings.py:230
 msgid "french"
 msgstr "Französisch"
 
-#: freedomvote/settings.py:231
+#: kairos/settings.py:231
 msgid "italian"
 msgstr "Italienisch"
 
-#: freedomvote/settings.py:232
+#: kairos/settings.py:232
 msgid "dutch"
 msgstr "Niederländisch"
 

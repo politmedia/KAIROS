@@ -72,7 +72,7 @@ jQuery(function ($){
   var options = Highcharts.setOptions({
     credits: {
       enabled: true,
-      text: 'Freedomvote',
+      text: 'KAIROS',
       href: hostUrl,
       target: '_blank' // Now this works like on an <a> tag
     }

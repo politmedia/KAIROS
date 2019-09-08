@@ -2,7 +2,7 @@
 
 KAIROS is a Voting Advice Application (VAA) which is developed and provided as an open source software. It allows you to run your own VAA with the views of politicians and parties to questions of a specific topic as a help to the voters.
 
-KAIROS is a fork of [Freedomvote](https://github.com/freedomvote/freedomvote) with additional features. It is powered by [PolitMedia](https://www.politmedia.ch/). For more information, see [KAIROS.SOFTWARE](https://kairos.software/).
+KAIROS is a fork of [Freedomvote](https://github.com/freedomvote/freedomvote/) with additional features. It is powered by [PolitMedia](https://www.politmedia.ch/). For more information, see [KAIROS.SOFTWARE](https://kairos.software/).
 
 ## Used in
 
@@ -14,9 +14,9 @@ KAIROS is a fork of [Freedomvote](https://github.com/freedomvote/freedomvote) wi
 
 ## How does it look?
 
-This is how Freedomvote looked for the Swiss Election in 2015 - [freedomvote.ch](https://freedomvote.ch/)
+This is how KAIROS looked for the Swiss Election in 2015 - [freedomvote.ch](https://freedomvote.ch/)
 
-![freedomvote.ch](https://raw.githubusercontent.com/freedomvote/freedomvote/master/tools/screenshot.png)
+![kairos.ch](https://raw.githubusercontent.com/politmedia/kairos/master/tools/screenshot.png)
 
 # Installation
 
@@ -42,8 +42,8 @@ More infos about the Django Secret
 
 ```ini
 [DB]
-NAME = freedomvote
-USER = freedomvote
+NAME = kairos
+USER = kairos
 PASS = ***********
 PORT = 5432
 HOST = 127.0.0.1
@@ -66,7 +66,7 @@ Now you can access the frontend on http://localhost:8000
 
 ## The easy way - Docker
 
-To run Freedomvote in a docker container, you need to install docker and docker-compose and execute those commands:
+To run KAIROS in a docker container, you need to install docker and docker-compose and execute those commands:
 
 ```bash
 $ make docker-init docker
@@ -84,7 +84,7 @@ Add `DJANGO_DEBUG=1` to your environment to use a local SQLite database instead 
 
 Django already provides a number of [management commands](https://docs.djangoproject.com/en/1.10/ref/django-admin/) out of the box.
 Other parts of this document already lists the usages of some of these commands.
-Freedomvote provides a couple of custom commands to ease the setup process:
+KAIROS provides a couple of custom commands to ease the setup process:
 
 ```bash
 $ python app/manage.py help
@@ -101,7 +101,7 @@ The translation are located in `app/locale/<lang_code>/LC_MESSAGES/django.po`. A
 
 To install another language (English in this example) make the following steps:
 
-`app/freedomvote/settings.py`
+`app/kairos/settings.py`
 
 ```python
 LANGUAGES = (
@@ -137,8 +137,8 @@ $ make docker-compilemessages
 
 # Translation
 
-We use crowdin.com for translation. If you want to help us to translate Freedomvote into your language, head over to https://crowdin.com/project/freedomvote and start working :)
+We use crowdin.com for translation. If you want to help us to translate Freedomvote into your language, head over to https://crowdin.com/project/freedomvote  and start working :)
 
 # License
 
-GPLv3 see [LICENSE](https://github.com/freedomvote/freedomvote/blob/master/LICENSE)
+GPLv3 see [LICENSE](https://github.com/politmedia/KAIROS/blob/master/LICENSE)

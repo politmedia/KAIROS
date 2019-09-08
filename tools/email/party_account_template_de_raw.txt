@@ -1,10 +1,10 @@
-Einladung FreedomVote
+Einladung KAIROS
 
 Sehr geehrte Damen und Herren
 
 Der Open Source Förderverein Swiss Open Systems User Group /ch/open und die
 Schweizer Sektion der Free Software Foundation Europe haben im Rahmen der
-Wahlen 2015 die Plattform "Freedomvote" eingerichtet, welche einen starken
+Wahlen 2015 die Plattform "KAIROS" eingerichtet, welche einen starken
 Fokus auf die Nachhaltigkeit im digitalen Umfeld legt.
 
 SwissICT nennt im Rahmen des Swiss ICT Symposium folgende Kennzahlen zum
@@ -28,7 +28,7 @@ den Einsatz in diesem Umfeld bei der Stimmabgabe entsprechend zu honorieren.
 Für Sie als Parteisektion haben wir den folgenden Login erstellt, wo Sie Ihre
 KandidatInnen verwalten können:
 
-   Link:      https://freedomvote.ch/party/bdp_ag/
+   Link:      https://kairos.ch/party/bdp_ag/
    Passwort:  *********
 
 Um Ihre Arbeit zu erleichtern, haben wir bereits fünf leere Profile erstellt.
@@ -53,7 +53,7 @@ nicolas.christener@ch-open.ch
 
 
 Freundliche Grüsse
-das FreedomVote-Team
+das KAIROS-Team
 
 
 [1] http://www.swissict.ch/medien/medienmitteilungen/medienmitteilungen/swiss-ict-symposium-wohin-bewegt-sich-der-ictwerkplatz-schweiz/

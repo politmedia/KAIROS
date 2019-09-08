@@ -1,6 +1,6 @@
-# Freedomvote Translation
-# Copyright (C) Freedomvote
-# This file is distributed under the same license as the freedomvote package.
+# KAIROS Translation
+# Copyright (C) KAIROS
+# This file is distributed under the same license as the kairos package.
 # Jonas Metzener <jonas.metzener@adfinis-sygroup.ch>, 2015.
 # Nico Rikken <nico.rikken@fsfe.org>, 2016.
 msgid ""
@@ -343,7 +343,7 @@ msgstr "Filter"
 
 #: core/templates/core/candidates/index.html:16
 msgid "opinion_admin"
-msgstr "Freedomvote"
+msgstr "KAIROS"
 
 #: core/templates/core/candidates/index.html:21
 #: core/templates/core/candidates/index.html:30
@@ -378,10 +378,10 @@ msgstr "Registration for candidates"
 #: core/templates/core/candidates/registration.html:7
 msgid ""
 "After the registration you will get a link to your personal profile on "
-"Freedomvote"
+"KAIROS"
 msgstr ""
 "After the registration you will get a link to your personal profile on "
-"Freedomvote"
+"KAIROS"
 
 #: core/templates/core/candidates/registration.html:13
 msgid "Register"
@@ -389,10 +389,10 @@ msgstr "Register"
 
 #: core/templates/core/candidates/registration_send_mail.html:6
 msgid ""
-"We have sent you a link to your profile on Freedomvote. It could take a few "
+"We have sent you a link to your profile on KAIROS. It could take a few "
 "minutes to show up in your inbox."
 msgstr ""
-"We have sent you a link to your profile on Freedomvote. It could take a few "
+"We have sent you a link to your profile on KAIROS. It could take a few "
 "minutes to show up in your inbox."
 
 #: core/templates/core/compare/index.html:13
@@ -551,8 +551,8 @@ msgstr "Your answers have been resetted"
 
 #: core/views.py:240
 #, python-format
-msgid "%(first_name)s %(last_name)s on Freedomvote"
-msgstr "%(first_name)s %(last_name)s on Freedomvote"
+msgid "%(first_name)s %(last_name)s on KAIROS"
+msgstr "%(first_name)s %(last_name)s on KAIROS"
 
 #: core/views.py:296
 msgid "total"
@@ -599,48 +599,48 @@ msgid "politician_delete_success"
 msgstr "Politican '%s %s' was deleted successfully"
 
 #: core/views.py:710
-msgid "Freedomvote account link"
-msgstr "Freedomvote account link"
+msgid "KAIROS account link"
+msgstr "KAIROS account link"
 
 #: core/views.py:711
 #, python-format
 msgid ""
 "Hello %(first_name)s %(last_name)s,\n"
 "\n"
-"            You receive the link for your profile on Freedomvote: %(url)s\n"
+"            You receive the link for your profile on KAIROS: %(url)s\n"
 "\n"
 "            Keep this link and use it to login to your profile again.\n"
 "\n"
 "            Sincerely,\n"
-"            The Freedomvote Team"
+"            The KAIROS Team"
 msgstr ""
 "Hello %(first_name)s %(last_name)s,\n"
 "\n"
-"            You receive the link for your profile on Freedomvote: %(url)s\n"
+"            You receive the link for your profile on KAIROS: %(url)s\n"
 "\n"
 "            Keep this link and use it to login to your profile again.\n"
 "\n"
 "            Sincerely,\n"
-"            The Freedomvote Team\n"
+"            The KAIROS Team\n"
 "            "
 
-#: freedomvote/settings.py:228
+#: kairos/settings.py:228
 msgid "german"
 msgstr "German"
 
-#: freedomvote/settings.py:229
+#: kairos/settings.py:229
 msgid "english"
 msgstr "English"
 
-#: freedomvote/settings.py:230
+#: kairos/settings.py:230
 msgid "french"
 msgstr "French"
 
-#: freedomvote/settings.py:231
+#: kairos/settings.py:231
 msgid "italian"
 msgstr "Italian"
 
-#: freedomvote/settings.py:232
+#: kairos/settings.py:232
 msgid "dutch"
 msgstr "Dutch"
 

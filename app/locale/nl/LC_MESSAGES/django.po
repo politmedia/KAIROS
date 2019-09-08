@@ -1,11 +1,11 @@
-# Freedomvote Translation
-# Copyright (C) Freedomvote
-# This file is distributed under the same license as the freedomvote package.
+# KAIROS Translation
+# Copyright (C) KAIROS
+# This file is distributed under the same license as the kairos package.
 # Jonas Metzener <jonas.metzener@adfinis-sygroup.ch>, 2015.
 # Nico Rikken <nico.rikken@fsfe.org>, 2016.
 msgid ""
 msgstr ""
-"Project-Id-Version: freedomvote\n"
+"Project-Id-Version: kairos\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-18 14:48+0200\n"
 "PO-Revision-Date: 2018-10-29 16:19\n"
@@ -341,7 +341,7 @@ msgstr "Filteren"
 
 #: core/templates/core/candidates/index.html:16
 msgid "opinion_admin"
-msgstr "Freedomvote"
+msgstr "KAIROS"
 
 #: core/templates/core/candidates/index.html:21
 #: core/templates/core/candidates/index.html:30
@@ -374,16 +374,16 @@ msgid "Registration for candidates"
 msgstr "Registratie voor kandidaten"
 
 #: core/templates/core/candidates/registration.html:7
-msgid "After the registration you will get a link to your personal profile on Freedomvote"
-msgstr "Na de registratie krijgt u een link naar uw persoonlijke profiel op Freedomvote"
+msgid "After the registration you will get a link to your personal profile on KAIROS"
+msgstr "Na de registratie krijgt u een link naar uw persoonlijke profiel op KAIROS"
 
 #: core/templates/core/candidates/registration.html:13
 msgid "Register"
 msgstr "Registreren"
 
 #: core/templates/core/candidates/registration_send_mail.html:6
-msgid "We have sent you a link to your profile on Freedomvote. It could take a few minutes to show up in your inbox."
-msgstr "We hebben je een e-mail gestuurd met je profiel op Freedomvote. Het kan een paar minuten duren voordat het in je inbox verschijnt."
+msgid "We have sent you a link to your profile on KAIROS. It could take a few minutes to show up in your inbox."
+msgstr "We hebben je een e-mail gestuurd met je profiel op KAIROS. Het kan een paar minuten duren voordat het in je inbox verschijnt."
 
 #: core/templates/core/compare/index.html:13
 #: core/templates/core/edit/questions.html:11
@@ -541,8 +541,8 @@ msgstr "Uw antwoorden zijn teruggezet"
 
 #: core/views.py:240
 #, python-format
-msgid "%(first_name)s %(last_name)s on Freedomvote"
-msgstr "%(first_name)s %(last_name)s bij Freedomvote"
+msgid "%(first_name)s %(last_name)s on KAIROS"
+msgstr "%(first_name)s %(last_name)s bij KAIROS"
 
 #: core/views.py:296
 msgid "total"
@@ -589,39 +589,39 @@ msgid "politician_delete_success"
 msgstr "Politicus '%s %s' is succesvol verwijderd"
 
 #: core/views.py:710
-msgid "Freedomvote account link"
-msgstr "Freedomvote-accountlink"
+msgid "KAIROS account link"
+msgstr "KAIROS-accountlink"
 
 #: core/views.py:711
 #, python-format
 msgid "Hello %(first_name)s %(last_name)s,\n\n"
-"            You receive the link for your profile on Freedomvote: %(url)s\n\n"
+"            You receive the link for your profile on KAIROS: %(url)s\n\n"
 "            Keep this link and use it to login to your profile again.\n\n"
 "            Sincerely,\n"
-"            The Freedomvote Team"
+"            The KAIROS Team"
 msgstr "Hallo %(first_name)s %(last_name)s,\n\n"
-"            U ontvangt de link voor uw profiel op Freedomvote: %(url)s\n\n"
+"            U ontvangt de link voor uw profiel op KAIROS: %(url)s\n\n"
 "            Bewaar deze link en gebruik deze om je opnieuw aan te melden bij je profiel.\n\n"
 "            Oprecht,\n"
-"            Het Freedomvote-team"
+"            Het KAIROS-team"
 
-#: freedomvote/settings.py:228
+#: kairos/settings.py:228
 msgid "german"
 msgstr "Duits"
 
-#: freedomvote/settings.py:229
+#: kairos/settings.py:229
 msgid "english"
 msgstr "Engels"
 
-#: freedomvote/settings.py:230
+#: kairos/settings.py:230
 msgid "french"
 msgstr "Frans"
 
-#: freedomvote/settings.py:231
+#: kairos/settings.py:231
 msgid "italian"
 msgstr "Italiaans"
 
-#: freedomvote/settings.py:232
+#: kairos/settings.py:232
 msgid "dutch"
 msgstr "Nederlands"
 

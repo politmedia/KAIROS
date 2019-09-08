@@ -1,6 +1,6 @@
-# Freedomvote Translation
-# Copyright (C) Freedomvote
-# This file is distributed under the same license as the freedomvote package.
+# KAIROS Translation
+# Copyright (C) KAIROS
+# This file is distributed under the same license as the kairos package.
 # Jonas Metzener <jonas.metzener@adfinis-sygroup.ch>, 2015.
 #
 msgid ""
