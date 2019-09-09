@@ -797,9 +797,9 @@ def party_upload_csv(request, party_name):
                         language=language
                     )
 
-                    politician.save()
-
                     send_mail_to_politician(request, politician)
+
+                    politician.save()
 
                     counter += 1
                 else:
