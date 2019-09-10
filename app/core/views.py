@@ -908,12 +908,21 @@ class PoliticianRegistrationView(FormView):
         request = self.request
         unique_key = self.kwargs['unique_key']
         user = User.objects.get(registrationkey__unique_key=unique_key)
+
+        lang = form.data['language']
+        language = Language.objects.filter(iso_code=lang)
+        if language.count() > 0:
+                language = Language(iso_code=lang)
+                language.save()
+        else:
+                language = language.first()
+
         politician = Politician.objects.create(
             first_name=form.data['first_name'],
             last_name=form.data['last_name'],
             email=form.data['email'],
             user_id=user.id,
-            language_id=form.data['language']
+            language=language,
         )
 
         send_mail_to_politician(request, politician)
