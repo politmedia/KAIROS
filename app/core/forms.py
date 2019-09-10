@@ -79,7 +79,7 @@ class RegistrationForm(forms.Form):
         attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
     choices = Language.objects.all()
     language = forms.ModelChoiceField(label=_('language'), queryset=choices, widget=forms.Select(
-        attrs={'class': 'form-control', 'required': True, 'autofocus': True}))
+        attrs={'class': 'form-control', 'required': True, 'autofocus': True}), to_field_name="iso_code")
 
     def __init__(self, *args, **kwargs):
         super(RegistrationForm, self).__init__(*args, **kwargs)
