@@ -93,44 +93,44 @@ urlpatterns = [
 
     # party urls
 
-    url(r'^party/(?P<party_name>\w+)/login/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/login/$',
         views.party_login_view,
         name='party_login'
         ),
-    url(r'^party/(?P<party_name>\w+)/logout/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/logout/$',
         views.party_logout_view,
         name='party_logout'
         ),
-    url(r'^party/(?P<party_name>\w+)/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/$',
         views.party_dashboard_view,
         name='party_dashboard'
         ),
-    url(r'^party/(?P<party_name>\w+)/export/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/export/$',
         views.party_export_view,
         name='party_export'
         ),
-    url(r'^party/(?P<party_name>\w+)/import/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/import/$',
         views.party_import_view,
         name='party_import'
         ),
-    url(r'^party/(?P<party_name>\w+)/upload_csv/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/upload_csv/$',
         views.party_upload_csv,
         name='party_upload_csv'
         ),
-    url(r'^party/(?P<party_name>\w+)/email/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/email/$',
         views.party_email_view,
         name='party_email'
         ),
-    url(r'^party/(?P<party_name>\w+)/politician/add/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/politician/add/$',
         views.party_politician_add_view,
         name='party_politician_add'
         ),
-    url(r'^party/(?P<party_name>\w+)/politician/(?P<politician_id>\d+)/edit/$',
+    url(r'^party/(?P<party_name>[\w\.\+\-@]+)/politician/(?P<politician_id>\d+)/edit/$',
         views.party_politician_edit_view,
         name='party_politician_edit'
         ),
     url(
-        r'^party/(?P<party_name>\w+)/politician/(?P<politician_id>\d+)/delete/$',
+        r'^party/(?P<party_name>[\w\.\+\-@]+)/politician/(?P<politician_id>\d+)/delete/$',
         views.party_politician_delete_view,
         name='party_politician_delete'
     ),
