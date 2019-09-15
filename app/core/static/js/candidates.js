@@ -210,14 +210,14 @@ Vue.component('candidate-list-item', {
             data: data.summary.map(function(sum) {
               return sum.value.negative
             }),
-            color: '#3333ff'
+            color: '#ff6441'
           },
           {
             name: '',
             data: data.summary.map(function(sum) {
               return sum.value.positive
             }),
-            color: '#11bb11'
+            color: '#009900'
           }
         ]
       })
@@ -281,7 +281,7 @@ Vue.component('candidate-list-item', {
 new Vue({
   el: '#vue-app',
   data: {
-    limit: 10,
+    limit: 30,
     results: [],
     loading: true
   },
