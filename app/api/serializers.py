@@ -26,14 +26,13 @@ class PoliticianSerializer(serializers.ModelSerializer):
 
     def get_thumbnail(self, instance):
         return (
-            self.context['request'].build_absolute_uri(
-                get_thumbnailer(instance.image)['large'].url)
+            get_thumbnailer(instance.image)['large'].url
             if instance.image
             else None
         )
 
     def get_profile_link(self, instance):
-        return self.context['request'].build_absolute_uri(reverse('politician', kwargs={'politician_id': instance.id}))
+        return reverse('politician', kwargs={'politician_id': instance.id})
 
     def get_statistic(self, instance):
         res = politician_statistic_view(
